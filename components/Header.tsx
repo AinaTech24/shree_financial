@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { SERVICES, SITE, tel } from "@/content/site";
-import { Phone, Mail, ChevronDown, Menu, X, ShieldCheck, UserCheck } from "lucide-react";
+import { Phone, Mail, ChevronDown, Menu, X, UserCheck } from "lucide-react";
 
 export default function Header() {
   const path = usePathname();
@@ -85,9 +85,7 @@ export default function Header() {
             {/* Calculators Dropdown */}
             <li className="nav-dropdown-item">
               <button
-                className={`nav-link ${
-                  path.includes("calc") ? "active" : ""
-                }`}
+                className={`nav-link ${path.includes("calc") ? "active" : ""}`}
                 aria-haspopup="true"
               >
                 Calculators <ChevronDown size={14} className="chevron-icon" />
@@ -103,12 +101,6 @@ export default function Header() {
                   MF Performance Calculators
                 </Link>
               </div>
-            </li>
-
-            <li>
-              <Link href="/scheme-wise-commission-disclosure" className={act("/scheme-wise-commission-disclosure")}>
-                AMC Disclosures
-              </Link>
             </li>
 
             <li>
@@ -165,7 +157,6 @@ export default function Header() {
                 <Link href="/mf-tools-calculators">MF Tools Calculators</Link>
               </div>
             </details>
-            <Link href="/scheme-wise-commission-disclosure">AMC Commission Disclosures</Link>
             <Link href="/blog">Blog</Link>
             <Link href="/contact">Contact Us</Link>
             <Link href="/login" className="mobile-login-btn">

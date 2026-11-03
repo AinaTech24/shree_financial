@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { GOALS, SITE } from "@/content/site";
-import { ShieldCheck, ArrowRight, Sparkles, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
+import { GOALS, SITE, tel } from "@/content/site";
+import { ArrowRight, Sparkles, ChevronLeft, ChevronRight, Phone, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 export default function GoalHero() {
   const [i, setI] = useState(0);
@@ -11,7 +11,7 @@ export default function GoalHero() {
 
   useEffect(() => {
     if (paused) return;
-    const t = setInterval(() => setI((x) => (x + 1) % GOALS.length), 6500);
+    const t = setInterval(() => setI((x) => (x + 1) % GOALS.length), 6000);
     return () => clearInterval(t);
   }, [paused]);
 
@@ -20,119 +20,104 @@ export default function GoalHero() {
 
   return (
     <section
-      className="hero-redesign"
+      className="hero-redesign-clean"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
       aria-label="Life goals"
     >
-      <div className="hero-mesh-background" />
+      <div className="hero-ambient-bg" />
 
-      <div className="wrap hero-wrap">
-        {/* Top Trust Banner */}
-        <div className="hero-trust-bar">
-          <span className="hero-trust-badge">
-            <ShieldCheck size={15} className="text-amber-500" />
-            <span>AMFI Registered Distributor (ARN-173086) • Founded in 2007</span>
-          </span>
-          <span className="hero-trust-badge secondary">
-            <CheckCircle2 size={15} className="text-emerald-500" />
-            <span>100% Paperless Digital Investment</span>
-          </span>
-        </div>
-
-        {/* Goal Quick Select Pills */}
-        <div className="hero-goal-selector-bar">
-          {GOALS.map((g, n) => (
-            <button
-              key={g.title}
-              type="button"
-              className={`goal-tab-pill ${n === i ? "active" : ""}`}
-              onClick={() => setI(n)}
-            >
-              <span>{g.title}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Active Goal Showcase Grid */}
-        <div className="hero-active-grid">
-          <div className="hero-copy-col">
-            <div className="hero-goal-eyebrow">
-              <Sparkles size={14} className="sparkle-icon" />
-              <span>Targeted Goal Planning</span>
+      <div className="wrap hero-clean-wrap">
+        {/* Main 2-Column Hero Showcase (Vertically Centered & Large Image) */}
+        <div className="hero-centered-grid">
+          {/* Centered Left Content Column */}
+          <div className="hero-copy-centered">
+            <div className="hero-badge-eyebrow">
+              <Sparkles size={14} className="sparkle-amber" />
+              <span>Targeted Goal Planning • Mutual Funds &amp; PMS</span>
             </div>
 
-            <h1 className="hero-headline">
-              Plan Your <span className="headline-highlight">{cur.title}</span> With High-Conviction Mutual Funds
+            <h1 className="hero-main-title">
+              Plan Your <span className="title-gradient">{cur.title}</span> With High-Conviction Schemes
             </h1>
 
-            <p className="hero-description">{cur.text}</p>
+            <p className="hero-main-sub">{cur.text}</p>
 
-            <div className="hero-stat-chips">
-              <div className="stat-chip">
-                <strong>17+</strong>
-                <span>Years Legacy</span>
+            <div className="hero-stats-band">
+              <div className="h-stat-item">
+                <strong>17+ Years</strong>
+                <span>Advisory Legacy</span>
               </div>
-              <div className="stat-chip">
-                <strong>₹500</strong>
-                <span>Starting SIP</span>
+              <div className="h-stat-sep" />
+              <div className="h-stat-item">
+                <strong>ARN-173086</strong>
+                <span>AMFI Registered</span>
               </div>
-              <div className="stat-chip">
+              <div className="h-stat-sep" />
+              <div className="h-stat-item">
                 <strong>5,000+</strong>
                 <span>Satisfied Clients</span>
               </div>
             </div>
 
-            <div className="hero-actions-row">
-              <Link href="/login" className="btn btn-primary hero-btn">
+            <div className="hero-cta-group">
+              <Link href="/login" className="btn btn-primary hero-primary-btn">
                 <span>{cur.cta}</span>
                 <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="btn btn-ghost hero-btn-secondary">
-                Book Free Consultation
+              <Link href="/contact" className="btn btn-ghost hero-secondary-btn">
+                <span>Book Free Consultation</span>
               </Link>
             </div>
           </div>
 
-          <div className="hero-visual-col">
-            <div className="hero-image-wrapper">
-              <img src={cur.img} alt={cur.title} className="hero-goal-image" />
-              <div className="hero-image-glow" />
+          {/* Large Scale Visual Column (Matching Content Height) */}
+          <div className="hero-visual-large">
+            <div className="hero-large-image-box">
+              <img
+                src={cur.img}
+                alt={cur.title}
+                className="hero-large-image"
+                loading="eager"
+              />
+              <div className="hero-glow-backdrop" />
             </div>
           </div>
         </div>
 
-        {/* Carousel Navigation Dots and Arrows */}
-        <div className="hero-controls-bar">
+        {/* Carousel Controls Bar */}
+        <div className="hero-carousel-nav">
           <button
             type="button"
-            className="hero-arrow-btn"
-            aria-label="Previous goal"
+            className="carousel-nav-btn prev"
+            aria-label="Previous Goal"
             onClick={() => go(i - 1)}
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={20} />
           </button>
 
-          <div className="hero-dots-row">
+          <div className="carousel-dots-group">
             {GOALS.map((g, n) => (
               <button
                 key={g.title}
                 type="button"
-                className={`hero-dot-indicator ${n === i ? "active" : ""}`}
-                aria-label={`Jump to ${g.title}`}
+                className={`carousel-dot-pill ${n === i ? "active" : ""}`}
+                aria-label={`Switch to ${g.title}`}
                 onClick={() => setI(n)}
-              />
+              >
+                <span className="dot-label">{g.title}</span>
+              </button>
             ))}
           </div>
 
           <button
             type="button"
-            className="hero-arrow-btn"
-            aria-label="Next goal"
+            className="carousel-nav-btn next"
+            aria-label="Next Goal"
             onClick={() => go(i + 1)}
           >
-            <ChevronRight size={18} />
+            <ChevronRight size={20} />
           </button>
         </div>
       </div>
