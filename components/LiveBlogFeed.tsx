@@ -29,9 +29,10 @@ export default function LiveBlogFeed({ initialArticles = [] }: Props) {
       try {
         const res = await fetch("/api/blogs");
         if (res.ok) {
-          const data: LiveArticle[] = await res.json();
-          if (isMounted && Array.isArray(data) && data.length > 0) {
-            setArticles(data);
+          const json = await res.json();
+          const list: LiveArticle[] = Array.isArray(json) ? json : (json?.articles || []);
+          if (isMounted && Array.isArray(list) && list.length > 0) {
+            setArticles(list);
           }
         }
       } catch (err) {

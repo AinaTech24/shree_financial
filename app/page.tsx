@@ -2,26 +2,15 @@ import Link from "next/link";
 import GoalHero from "@/components/GoalHero";
 import ModernCalculator from "@/components/ModernCalculator";
 import FeatureTabs from "@/components/FeatureTabs";
-<<<<<<< HEAD
-import { PARTNERS, SERVICES, TESTIMONIALS, TOOLS, WHY, SITE, tel } from "@/content/site";
-=======
-import LeadForm from "@/components/LeadForm";
-import ContactInfo from "@/components/ContactInfo";
 import HomeNewsWidget from "@/components/HomeNewsWidget";
-import { PARTNERS, SERVICES, TESTIMONIALS, TOOLS, WHY, SITE } from "@/content/site";
->>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
+import { SERVICES, TESTIMONIALS, TOOLS, WHY, SITE } from "@/content/site";
 import {
   ShieldCheck,
   CheckCircle2,
-  TrendingUp,
   Award,
   ArrowRight,
-  Sparkles,
   Star,
-  Phone,
   MessageCircle,
-  Clock,
-  Layers,
 } from "lucide-react";
 
 const SERVICE_TAGS: Record<string, string> = {
@@ -53,66 +42,48 @@ const SERVICE_DESCS: Record<string, string> = {
 
 export default function Home() {
   return (
-    <div className="landing-page-root">
-      {/* 1. Redesigned Clean Hero (No cluttered pills, centered content, enlarged image) */}
+    <>
+      {/* 1. Hero Carousel */}
       <GoalHero />
 
-      {/* 2. Regulatory & Trust Credentials Bar */}
-      <div className="landing-trust-ribbon">
-        <div className="wrap trust-ribbon-flex">
-          <div className="trust-ribbon-item">
-            <ShieldCheck size={18} className="trust-icon amber" />
-            <div>
-              <span className="trust-label">AMFI Registered Distributor</span>
-              <strong className="trust-val">ARN-173086</strong>
-            </div>
+      {/* 2. Regulatory & Trust Ribbon */}
+      <div className="ribbon-redesign">
+        <div className="wrap ribbon-flex">
+          <div className="ribbon-item">
+            <ShieldCheck size={18} className="ribbon-icon" />
+            <span>
+              AMFI Registered Mutual Fund Distributor <b>ARN-173086</b>
+            </span>
           </div>
-
-          <div className="trust-ribbon-item">
-            <Award size={18} className="trust-icon blue" />
-            <div>
-              <span className="trust-label">APMI Registered PMS</span>
-              <strong className="trust-val">APRN-04142</strong>
-            </div>
+          <div className="ribbon-item">
+            <Award size={18} className="ribbon-icon" />
+            <span>
+              APMI Registered PMS Distributor <b>APRN-04142</b>
+            </span>
           </div>
-
-          <div className="trust-ribbon-item">
-            <CheckCircle2 size={18} className="trust-icon emerald" />
-            <div>
-              <span className="trust-label">Serving Since</span>
-              <strong className="trust-val">2007 (17+ Years)</strong>
-            </div>
-          </div>
-
-          <div className="trust-ribbon-item">
-            <TrendingUp size={18} className="trust-icon purple" />
-            <div>
-              <span className="trust-label">Digital Execution</span>
-              <strong className="trust-val">100% Paperless</strong>
-            </div>
+          <div className="ribbon-item">
+            <CheckCircle2 size={18} className="ribbon-icon" />
+            <span>
+              Founded in <b>2007</b> · Khambhat, Gujarat
+            </span>
           </div>
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* 3. Services Section - Modern All-Services Card Grid */}
-=======
-      {/* 3. Comprehensive Wealth Distribution Services */}
->>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
+      {/* 3. Services Section - Exactly 6 Services in a clean grid */}
       <section className="section white" id="services">
         <div className="wrap">
           <div className="sec-head center">
             <span className="eyebrow">Our Services</span>
             <h2>Complete Wealth &amp; Investment Solutions</h2>
             <p>
-              From systematic mutual fund SIPs to bespoke PMS strategies, we distribute institutional-quality financial
+              From goal-based mutual fund SIPs to bespoke PMS strategies, we distribute institutional-quality financial
               products backed by continuous monitoring.
             </p>
           </div>
 
-<<<<<<< HEAD
           <div className="svc-cards-grid">
-            {SERVICES.map((s) => (
+            {SERVICES.slice(0, 6).map((s) => (
               <div className="svc-card-modern" key={s.slug}>
                 <div className="svc-card-top">
                   <div className="svc-card-icon-bubble">
@@ -146,46 +117,12 @@ export default function Home() {
                 </div>
               </div>
             ))}
-=======
-          <div className="landing-services-grid">
-            {SERVICES.map((s) => (
-              <Link href={`/${s.slug}`} className="landing-service-card" key={s.slug}>
-                <div className="card-icon-container">
-                  <img src={s.icon} alt={s.label} className="service-card-icon" />
-                </div>
-                <h3 className="service-card-title">{s.label}</h3>
-                <p className="service-card-desc">
-                  Tailored distribution and systematic execution designed for your financial journey.
-                </p>
-                <div className="service-card-action">
-                  <span>Explore Service</span>
-                  <ArrowRight size={15} className="card-arrow" />
-                </div>
-              </Link>
-            ))}
-
-            {/* Custom Consultation Card */}
-            <div className="landing-service-card consultation-cta-card">
-              <span className="cta-mini-pill">Expert Consultation</span>
-              <h3>Need Custom Financial Guidance?</h3>
-              <p>Speak directly with our AMFI-registered distributor to map your portfolio to life goals.</p>
-              <Link href="/contact" className="btn btn-gold cta-action-btn">
-                <span>Talk to Our Team</span>
-                <ArrowRight size={15} />
-              </Link>
-            </div>
->>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
           </div>
         </div>
       </section>
 
-<<<<<<< HEAD
       {/* 4. Calculator Showcase */}
       <section className="section calculator-showcase-section" id="calculator">
-=======
-      {/* 4. Interactive Compounding Calculator Showcase (Image 1 Layout) */}
-      <section className="section landing-calculator-section" id="calculator">
->>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
         <div className="wrap">
           <div className="sec-head center">
             <span className="eyebrow">Interactive Compounding</span>
@@ -198,7 +135,7 @@ export default function Home() {
 
           <ModernCalculator initialMode="lumpsum" showModeSwitcher={true} />
 
-          <div className="landing-calc-footer-row">
+          <div className="calculator-more-link-row">
             <span>Looking for STP, SWP, Retirement, or Loan calculators?</span>
             <Link href="/calculator" className="btn btn-ghost">
               <span>View All 14 Calculators Hub</span>
@@ -217,10 +154,10 @@ export default function Home() {
             <p>17+ years of transparent distributor relationships, guided by client interests and AMFI ethics.</p>
           </div>
 
-          <div className="landing-why-grid">
+          <div className="why-modern-grid">
             {WHY.map((w, idx) => (
-              <div className="landing-why-card" key={w.label}>
-                <div className="why-icon-bubble">
+              <div className="why-modern-card" key={w.label}>
+                <div className="why-icon-container">
                   <img src={w.icon} alt={w.label} />
                 </div>
                 <h3>{w.label}</h3>
@@ -236,13 +173,8 @@ export default function Home() {
         </div>
       </section>
 
-<<<<<<< HEAD
       {/* 6. Digital Tools Section */}
       <section className="section" id="tools">
-=======
-      {/* 6. Digital Investor Tools Hub */}
-      <section className="section landing-tools-section" id="tools">
->>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
         <div className="wrap">
           <div className="sec-head center">
             <span className="eyebrow">Digital Tools</span>
@@ -250,18 +182,18 @@ export default function Home() {
             <p>Everything you need to evaluate, monitor, and optimize your financial health.</p>
           </div>
 
-          <div className="landing-tools-grid">
+          <div className="tools-modern-grid">
             {TOOLS.map((t) => (
-              <article className="landing-tool-card" key={t.title}>
-                <div className="tool-card-top">
-                  <div className="tool-icon-frame">
+              <article className="tool-modern-card" key={t.title}>
+                <div className="tool-top-row">
+                  <div className="tool-icon-bubble">
                     <img src={t.icon} alt={t.title} />
                   </div>
-                  <span className="tool-category-badge">Interactive</span>
+                  <span className="tool-pill">Online Tool</span>
                 </div>
                 <h3>{t.title}</h3>
                 <p>{t.text}</p>
-                <Link href={t.href} className="tool-link-action">
+                <Link href={t.href} className="tool-action-link">
                   <span>Open Tool</span>
                   <ArrowRight size={15} />
                 </Link>
@@ -271,7 +203,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Platform Features Showcase */}
+      {/* 7. Features Tabs Section */}
       <section className="section white">
         <div className="wrap">
           <div className="sec-head center">
@@ -283,11 +215,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. Live Market News Widget */}
-      <HomeNewsWidget />
-
-      {/* 9. Client Testimonials */}
-      <section className="section white">
+      {/* 8. Client Testimonials */}
+      <section className="section testimonials-section">
         <div className="wrap">
           <div className="sec-head center">
             <span className="eyebrow">Client Feedback</span>
@@ -295,20 +224,20 @@ export default function Home() {
             <p>Stories of financial discipline and wealth creation from our family of investors.</p>
           </div>
 
-          <div className="landing-testimonials-grid">
+          <div className="testimonials-modern-grid">
             {TESTIMONIALS.map((t) => (
-              <figure className="landing-testi-card" key={t.name}>
-                <div className="testi-stars-row">
+              <figure className="testi-card" key={t.name}>
+                <div className="testi-stars">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} fill="#f59e0b" stroke="#f59e0b" />
+                    <Star key={i} size={16} className="star-filled" fill="#f59e0b" stroke="#f59e0b" />
                   ))}
                 </div>
-                <blockquote className="testi-text">“{t.text}”</blockquote>
-                <figcaption className="testi-author-box">
-                  <div className="author-circle-avatar">{t.name.charAt(0)}</div>
+                <blockquote className="testi-quote">“{t.text}”</blockquote>
+                <figcaption className="testi-author">
+                  <div className="author-avatar">{t.name.charAt(0)}</div>
                   <div>
-                    <strong className="author-full-name">{t.name}</strong>
-                    <span className="author-subtitle">{t.role}</span>
+                    <strong className="author-name">{t.name}</strong>
+                    <span className="author-role">{t.role}</span>
                   </div>
                 </figcaption>
               </figure>
@@ -317,52 +246,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 10. Partners & Leadership Team */}
-      <section className="section landing-partners-section">
-        <div className="wrap">
-          <div className="sec-head center">
-            <span className="eyebrow">Leadership</span>
-            <h2>The Partners Behind Shah Financial Services</h2>
-            <p>Committed to ethical financial distribution and personalized family wealth advisory.</p>
-          </div>
+      {/* 9. Real-Time Financial News Updates */}
+      <HomeNewsWidget />
 
-<<<<<<< HEAD
-          <div className="team-cards-grid">
-            {PARTNERS.map((p) => (
-              <div className="team-member-card" key={p.name}>
-                <div className="member-image-wrap">
-                  <img
-                    src={p.image || "/img/misc/user.gif"}
-                    alt={p.name}
-                    className="member-portrait-img"
-                    loading="lazy"
-                  />
-                  {p.badge && <span className="member-badge-floating">{p.badge}</span>}
-                </div>
-                <div className="member-card-body">
-                  <span className="member-exp-tag">{p.exp || "10+ YEARS EXPERIENCE"}</span>
-                  <h3 className="member-name">{p.name}</h3>
-                  <h4 className="member-role">{p.role}</h4>
-                  <p className="member-bio">{p.bio}</p>
-                </div>
-=======
-          <div className="landing-partners-grid">
-            {PARTNERS.map((p) => (
-              <div className="landing-partner-card" key={p.name}>
-                <div className="partner-letter-avatar">
-                  <span>{p.name.replace(/^(Mr|Mrs)\.\s*/, "").charAt(0)}</span>
-                </div>
-                <h4 className="partner-full-name">{p.name}</h4>
-                <p className="partner-role-title">{p.role}</p>
->>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-<<<<<<< HEAD
-      {/* 10. Simple & Clean CTA Section */}
+      {/* 10. Simple & Clean CTA Section (Replaces Contact Form on Landing Page) */}
       <section className="section simple-cta-section" id="consultation">
         <div className="wrap">
           <div className="simple-cta-card">
@@ -386,28 +273,10 @@ export default function Home() {
                 <MessageCircle size={16} />
                 <span>WhatsApp</span>
               </a>
-=======
-      {/* 11. Consultation & Contact Section (Captcha Free) */}
-      <section className="section white" id="contact">
-        <div className="wrap">
-          <div className="sec-head center">
-            <span className="eyebrow">Get In Touch</span>
-            <h2>Begin Your Financial Journey Today</h2>
-            <p>Reach out to our office in Khambhat, Gujarat or drop an online enquiry.</p>
-          </div>
-
-          <div className="landing-contact-grid">
-            <ContactInfo />
-            <div className="landing-form-card">
-              <div className="form-card-badge">Free Consultation</div>
-              <h3>Talk to an AMFI Registered Advisor</h3>
-              <p>Leave your details and we will connect within 24 business hours.</p>
-              <LeadForm showService={true} subject="Website Homepage Consultation Enquiry" />
->>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
             </div>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }
