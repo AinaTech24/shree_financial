@@ -1,4 +1,4 @@
-"use client";
+  "use client";
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
@@ -29,32 +29,6 @@ export default function GoalHero() {
       <div className="hero-mesh-background" />
 
       <div className="wrap hero-wrap">
-        {/* Top Trust Banner */}
-        <div className="hero-trust-bar">
-          <span className="hero-trust-badge">
-            <ShieldCheck size={15} className="text-amber-500" />
-            <span>AMFI Registered Distributor (ARN-173086) • Founded in 2007</span>
-          </span>
-          <span className="hero-trust-badge secondary">
-            <CheckCircle2 size={15} className="text-emerald-500" />
-            <span>100% Paperless Digital Investment</span>
-          </span>
-        </div>
-
-        {/* Goal Quick Select Pills */}
-        <div className="hero-goal-selector-bar">
-          {GOALS.map((g, n) => (
-            <button
-              key={g.title}
-              type="button"
-              className={`goal-tab-pill ${n === i ? "active" : ""}`}
-              onClick={() => setI(n)}
-            >
-              <span>{g.title}</span>
-            </button>
-          ))}
-        </div>
-
         {/* Active Goal Showcase Grid */}
         <div className="hero-active-grid">
           <div className="hero-copy-col">
@@ -85,20 +59,24 @@ export default function GoalHero() {
             </div>
 
             <div className="hero-actions-row">
-              <Link href="/login" className="btn btn-primary hero-btn">
-                <span>{cur.cta}</span>
+              <Link href="/contact" className="btn btn-primary hero-btn">
+                <span>Start Your {cur.title} Plan</span>
                 <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="btn btn-ghost hero-btn-secondary">
-                Book Free Consultation
+              <Link href="/services" className="btn btn-ghost hero-ghost-btn">
+                <span>Explore All Services</span>
               </Link>
             </div>
           </div>
 
           <div className="hero-visual-col">
-            <div className="hero-image-wrapper">
-              <img src={cur.img} alt={cur.title} className="hero-goal-image" />
+            <div className="hero-image-wrapper enlarged-hero-wrapper">
+              <img src={cur.img} alt={cur.title} className="hero-goal-image enlarged-hero-image" />
               <div className="hero-image-glow" />
+              <div className="hero-goal-overlay-badge">
+                <span className="goal-badge-dot" />
+                <span>{cur.title}</span>
+              </div>
             </div>
           </div>
         </div>

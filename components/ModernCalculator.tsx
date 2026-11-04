@@ -1,9 +1,19 @@
 "use client";
 
-import React, { useState, useId } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Sparkles, TrendingUp, ShieldCheck, ArrowRight, Calculator as CalcIcon, RefreshCw } from "lucide-react";
-import { SIP_NOTE } from "@/content/site";
+import {
+  Sparkles,
+  TrendingUp,
+  ShieldCheck,
+  ArrowRight,
+  Calculator as CalcIcon,
+  RotateCcw,
+  CheckCircle2,
+  ChevronUp,
+  ChevronDown,
+  Info,
+} from "lucide-react";
 
 export type CalcMode = "lumpsum" | "sip";
 
@@ -31,18 +41,23 @@ export function formatCompactInr(val: number): string {
   return `₹${Math.round(val).toLocaleString("en-IN")}`;
 }
 
-export default function ModernCalculator({ initialMode = "lumpsum", showModeSwitcher = true }: ModernCalculatorProps) {
+export default function ModernCalculator({
+  initialMode = "lumpsum",
+  showModeSwitcher = true,
+}: ModernCalculatorProps) {
   const [mode, setMode] = useState<CalcMode>(initialMode);
 
-  // Lumpsum defaults
-  const [lumpAmount, setLumpAmount] = useState<number>(500000);
+  // Lumpsum state
+  const [lumpAmount, setLumpAmount] = useState<number>(100000);
   const [lumpRate, setLumpRate] = useState<number>(12);
   const [lumpYears, setLumpYears] = useState<number>(10);
 
-  // SIP defaults
+  // SIP state
   const [sipAmount, setSipAmount] = useState<number>(10000);
   const [sipRate, setSipRate] = useState<number>(12);
   const [sipYears, setSipYears] = useState<number>(10);
+
+  const tableScrollRef = useRef<HTMLDivElement>(null);
 
   const isLump = mode === "lumpsum";
   const amount = isLump ? lumpAmount : sipAmount;
@@ -54,410 +69,534 @@ export default function ModernCalculator({ initialMode = "lumpsum", showModeSwit
   const years = isLump ? lumpYears : sipYears;
   const setYears = isLump ? setLumpYears : setSipYears;
 
-  // Calculation formulas
-  let totalMaturity = 0;
-  let totalInvested = 0;
-  let capitalGains = 0;
-
-  if (isLump) {
-    totalInvested = amount;
-    totalMaturity = amount * Math.pow(1 + rate / 100, years);
-    capitalGains = Math.max(0, totalMaturity - totalInvested);
-  } else {
-    const monthlyRate = rate / 12 / 100;
-    const months = years * 12;
-    totalInvested = amount * months;
-    if (monthlyRate > 0) {
-      totalMaturity = amount * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
-    } else {
-      totalMaturity = totalInvested;
-    }
-    capitalGains = Math.max(0, totalMaturity - totalInvested);
-  }
-
-  const multiple = totalInvested > 0 ? (totalMaturity / totalInvested).toFixed(2) : "1.00";
-  const principalPercent = totalMaturity > 0 ? Math.round((totalInvested / totalMaturity) * 100) : 100;
-  const gainsPercent = Math.max(0, 100 - principalPercent);
-
-  // Rule of 72 stats
-  const doublingYears = rate > 0 ? (72 / rate).toFixed(1) : "0";
-
-  // Yearly progression breakdown
-  const progression = [];
-  for (let y = 1; y <= years; y++) {
+  const handleReset = () => {
     if (isLump) {
-      const val = amount * Math.pow(1 + rate / 100, y);
-      const gain = val - amount;
-      progression.push({
-        year: y,
-        invested: amount,
-        gains: Math.round(gain),
-        total: Math.round(val),
-      });
+      setLumpAmount(100000);
+      setLumpRate(12);
+      setLumpYears(10);
     } else {
-      const m = y * 12;
-      const inv = amount * m;
-      const r = rate / 12 / 100;
-      const val = r > 0 ? amount * ((Math.pow(1 + r, m) - 1) / r) * (1 + r) : inv;
-      const gain = val - inv;
-      progression.push({
-        year: y,
-        invested: inv,
-        gains: Math.round(gain),
-        total: Math.round(val),
-      });
+      setSipAmount(10000);
+      setSipRate(12);
+      setSipYears(10);
     }
-  }
+  };
+
+  // Calculations
+  const { totalInvested, totalMaturity, capitalGains, principalPercent, gainsPercent, progression } =
+    useMemo(() => {
+      let invested = 0;
+      let maturity = 0;
+
+      if (isLump) {
+        invested = amount;
+        maturity = amount * Math.pow(1 + rate / 100, years);
+      } else {
+        const monthlyRate = rate / 12 / 100;
+        const months = years * 12;
+        invested = amount * months;
+        if (monthlyRate > 0) {
+          maturity =
+            amount *
+            ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
+            (1 + monthlyRate);
+        } else {
+          maturity = invested;
+        }
+      }
+
+      const gains = Math.max(0, maturity - invested);
+      const pPercent = maturity > 0 ? Math.round((invested / maturity) * 100) : 100;
+      const gPercent = Math.max(0, 100 - pPercent);
+
+      const tableData = [];
+      for (let y = 1; y <= years; y++) {
+        if (isLump) {
+          const val = amount * Math.pow(1 + rate / 100, y);
+          tableData.push({
+            year: y,
+            initialCapital: amount,
+            projectedValue: Math.round(val),
+          });
+        } else {
+          const m = y * 12;
+          const inv = amount * m;
+          const r = rate / 12 / 100;
+          const val = r > 0 ? amount * ((Math.pow(1 + r, m) - 1) / r) * (1 + r) : inv;
+          tableData.push({
+            year: y,
+            initialCapital: inv,
+            projectedValue: Math.round(val),
+          });
+        }
+      }
+
+      return {
+        totalInvested: invested,
+        totalMaturity: maturity,
+        capitalGains: gains,
+        principalPercent: pPercent,
+        gainsPercent: gPercent,
+        progression: tableData,
+      };
+    }, [isLump, amount, rate, years]);
+
+  const scrollToTable = (position: "top" | "end") => {
+    if (tableScrollRef.current) {
+      if (position === "top") {
+        tableScrollRef.current.scrollTop = 0;
+      } else {
+        tableScrollRef.current.scrollTop = tableScrollRef.current.scrollHeight;
+      }
+    }
+  };
+
+  // SVG Chart points
+  const maxProgValue = progression.length > 0 ? progression[progression.length - 1].projectedValue : 1;
+  const chartWidth = 700;
+  const chartHeight = 180;
+  const points = progression.map((d, idx) => {
+    const x = progression.length > 1 ? (idx / (progression.length - 1)) * (chartWidth - 40) + 20 : 20;
+    const y = chartHeight - 30 - (d.projectedValue / maxProgValue) * (chartHeight - 50);
+    return { x, y, value: d.projectedValue };
+  });
+
+  const svgPath =
+    points.length > 0
+      ? `M ${points[0].x} ${points[0].y} ` +
+        points
+          .slice(1)
+          .map((p) => `L ${p.x} ${p.y}`)
+          .join(" ")
+      : "";
+
+  const areaPath =
+    points.length > 0
+      ? `${svgPath} L ${points[points.length - 1].x} ${chartHeight - 20} L ${points[0].x} ${
+          chartHeight - 20
+        } Z`
+      : "";
+
+  // Donut circumference (radius 50)
+  const donutRadius = 50;
+  const circumference = 2 * Math.PI * donutRadius;
+  const gainsStroke = (gainsPercent / 100) * circumference;
+  const principalStroke = circumference - gainsStroke;
 
   return (
-    <div className="modern-calc-wrap">
-      {/* Top Badge & Header */}
-      <div className="calc-header-block">
-        <div className="calc-badge">
-          <span className="calc-badge-icon">
-            <TrendingUp size={14} />
-          </span>
-          <span>{isLump ? "ONE-TIME CAPITAL COMPOUNDING" : "MONTHLY WEALTH COMPOUNDING"}</span>
+    <div className="theme-calc-container">
+      {/* Top Header Row with Badges, Title, Mode Switcher, and Reset */}
+      <div className="theme-calc-header">
+        <div className="theme-calc-header-left">
+          <div className="theme-calc-badges-row">
+            <span className="badge-investment">INVESTMENT</span>
+            <span className="badge-core-tool">★ CORE TOOL</span>
+            {showModeSwitcher && (
+              <div className="theme-mode-tabs">
+                <button
+                  type="button"
+                  className={`theme-mode-tab ${mode === "lumpsum" ? "active" : ""}`}
+                  onClick={() => setMode("lumpsum")}
+                >
+                  Lumpsum
+                </button>
+                <button
+                  type="button"
+                  className={`theme-mode-tab ${mode === "sip" ? "active" : ""}`}
+                  onClick={() => setMode("sip")}
+                >
+                  Monthly SIP
+                </button>
+              </div>
+            )}
+          </div>
+
+          <h2 className="theme-calc-title">
+            {isLump ? "Lumpsum Calculator" : "SIP Calculator"}
+          </h2>
+          <p className="theme-calc-sub">
+            {isLump
+              ? "Estimate prospective compounding growth for one-time lump sum mutual fund investments."
+              : "Forecast prospective compounding growth for disciplined monthly systematic investments."}
+          </p>
         </div>
 
-        <h2 className="calc-main-title">
-          <span>{isLump ? "Lumpsum" : "SIP"}</span> <span className="highlight">Calculator</span>
-        </h2>
-
-        <p className="calc-subtitle">
-          {isLump
-            ? "Calculate how a single one-time capital investment expands over multi-year horizons via uninterrupted compounding growth."
-            : "Calculate how disciplined monthly contributions compound into a substantial wealth corpus through market cycles."}
-        </p>
-
-        {showModeSwitcher && (
-          <div className="calc-switcher">
-            <button
-              type="button"
-              className={`switcher-tab ${isLump ? "active" : ""}`}
-              onClick={() => setMode("lumpsum")}
-            >
-              Lumpsum Calculator
-            </button>
-            <button
-              type="button"
-              className={`switcher-tab ${!isLump ? "active" : ""}`}
-              onClick={() => setMode("sip")}
-            >
-              SIP Calculator
-            </button>
-          </div>
-        )}
+        <button type="button" className="theme-calc-reset-btn" onClick={handleReset}>
+          <RotateCcw size={14} />
+          <span>Reset</span>
+        </button>
       </div>
 
-      {/* Main 2-column Grid */}
-      <div className="calc-body-grid">
-        {/* Left Column: Sliders & Pills */}
-        <div className="calc-card calc-inputs-card">
-          {/* Amount input */}
-          <div className="calc-fld-group">
-            <div className="fld-header">
-              <label htmlFor="inv-amount">
-                {isLump ? "One-Time Investment Amount" : "Monthly Investment Amount"}
-              </label>
-              <div className="fld-input-box">
-                <span className="fld-prefix">₹</span>
-                <input
-                  id="inv-amount"
-                  type="number"
-                  min={isLump ? 5000 : 500}
-                  max={isLump ? 10000000 : 1000000}
-                  step={isLump ? 10000 : 1000}
-                  value={amount}
-                  onChange={(e) => {
-                    const v = Number(e.target.value);
-                    if (!isNaN(v)) setAmount(v);
-                  }}
-                  aria-label="Investment Amount"
-                />
-              </div>
-            </div>
-
-            <div className="fld-slider-wrap">
-              <input
-                type="range"
-                min={isLump ? 10000 : 500}
-                max={isLump ? 10000000 : 200000}
-                step={isLump ? 10000 : 500}
-                value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
-                className="custom-range"
-              />
-              <div className="range-ticks">
-                <span>{isLump ? "₹10,000" : "₹500"}</span>
-                <span>{isLump ? "₹50 Lakhs" : "₹1 Lakh"}</span>
-                <span>{isLump ? "₹1 Crore" : "₹2 Lakhs"}</span>
-              </div>
-            </div>
-
-            <div className="quick-pills">
-              {isLump
-                ? [100000, 500000, 1000000, 2500000].map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      className={`quick-pill ${amount === v ? "active" : ""}`}
-                      onClick={() => setAmount(v)}
-                    >
-                      {formatCompactInr(v)}
-                    </button>
-                  ))
-                : [2000, 5000, 10000, 25000].map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      className={`quick-pill ${amount === v ? "active" : ""}`}
-                      onClick={() => setAmount(v)}
-                    >
-                      {formatInr(v)} / mo
-                    </button>
-                  ))}
-            </div>
+      {/* Main Grid: Parameters on Left, 3 Metric Cards on Right */}
+      <div className="theme-calc-top-grid">
+        {/* Left: Parameters & Inputs Card */}
+        <div className="theme-calc-inputs-card">
+          <div className="inputs-card-header">
+            <h3>Parameters &amp; Inputs</h3>
+            <span className="badge-live-calc">LIVE CALCULATION</span>
           </div>
 
-          {/* Expected Return input */}
-          <div className="calc-fld-group">
-            <div className="fld-header">
-              <label htmlFor="cagr-rate">Expected Annual Return (CAGR)</label>
-              <div className="fld-input-box">
+          <div className="inputs-controls-stack">
+            {/* Input 1: Total Investment Amount */}
+            <div className="theme-input-group">
+              <div className="input-label-row">
+                <label htmlFor="theme-amount">
+                  {isLump ? "TOTAL INVESTMENT AMOUNT" : "MONTHLY SIP AMOUNT"}
+                </label>
+                <div className="input-value-pill">
+                  <span className="pill-currency">₹</span>
+                  <input
+                    id="theme-amount"
+                    type="number"
+                    min={isLump ? 5000 : 500}
+                    max={isLump ? 50000000 : 2000000}
+                    step={isLump ? 10000 : 500}
+                    value={amount}
+                    onChange={(e) => {
+                      const v = Number(e.target.value);
+                      if (!isNaN(v)) setAmount(v);
+                    }}
+                    aria-label="Investment Amount"
+                  />
+                </div>
+              </div>
+
+              <div className="slider-wrapper">
                 <input
-                  id="cagr-rate"
-                  type="number"
+                  type="range"
+                  min={isLump ? 5000 : 500}
+                  max={isLump ? 5000000 : 200000}
+                  step={isLump ? 5000 : 500}
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  className="theme-range-slider"
+                />
+                <div className="slider-limits">
+                  <span>{isLump ? "₹5,000" : "₹500"}</span>
+                  <span>{isLump ? "₹50,00,000" : "₹2,00,000"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Input 2: Expected Return Rate (P.A) */}
+            <div className="theme-input-group">
+              <div className="input-label-row">
+                <label htmlFor="theme-rate">EXPECTED RETURN RATE (P.A)</label>
+                <div className="input-value-pill">
+                  <input
+                    id="theme-rate"
+                    type="number"
+                    min={1}
+                    max={30}
+                    step={0.5}
+                    value={rate}
+                    onChange={(e) => {
+                      const v = Number(e.target.value);
+                      if (!isNaN(v)) setRate(v);
+                    }}
+                    aria-label="Expected Return Rate"
+                  />
+                  <span className="pill-percent">%</span>
+                </div>
+              </div>
+
+              <div className="slider-wrapper">
+                <input
+                  type="range"
                   min={1}
                   max={30}
                   step={0.5}
                   value={rate}
-                  onChange={(e) => {
-                    const v = Number(e.target.value);
-                    if (!isNaN(v)) setRate(v);
-                  }}
-                  aria-label="Expected Return Rate"
+                  onChange={(e) => setRate(Number(e.target.value))}
+                  className="theme-range-slider"
                 />
-                <span className="fld-suffix">%</span>
+                <div className="slider-limits">
+                  <span>1%</span>
+                  <span>30%</span>
+                </div>
               </div>
             </div>
 
-            <div className="fld-slider-wrap">
-              <input
-                type="range"
-                min={1}
-                max={30}
-                step={0.5}
-                value={rate}
-                onChange={(e) => setRate(Number(e.target.value))}
-                className="custom-range"
-              />
-              <div className="range-ticks">
-                <span>8% (Fixed income)</span>
-                <span>13% (Equity average)</span>
-                <span>30%</span>
+            {/* Input 3: Time Period */}
+            <div className="theme-input-group">
+              <div className="input-label-row">
+                <label htmlFor="theme-years">TIME PERIOD</label>
+                <div className="input-value-pill">
+                  <input
+                    id="theme-years"
+                    type="number"
+                    min={1}
+                    max={40}
+                    step={1}
+                    value={years}
+                    onChange={(e) => {
+                      const v = Number(e.target.value);
+                      if (!isNaN(v)) setYears(Math.max(1, Math.min(40, v)));
+                    }}
+                    aria-label="Time Period"
+                  />
+                  <span className="pill-years">{years === 1 ? "Year" : "Years"}</span>
+                </div>
               </div>
-            </div>
 
-            <div className="quick-pills">
-              {[10, 12, 14, 16].map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  className={`quick-pill ${rate === r ? "active" : ""}`}
-                  onClick={() => setRate(r)}
-                >
-                  {r}% p.a.
-                </button>
-              ))}
+              <div className="slider-wrapper">
+                <input
+                  type="range"
+                  min={1}
+                  max={40}
+                  step={1}
+                  value={years}
+                  onChange={(e) => setYears(Number(e.target.value))}
+                  className="theme-range-slider"
+                />
+                <div className="slider-limits">
+                  <span>1 Year</span>
+                  <span>40 Years</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Investment Horizon input */}
-          <div className="calc-fld-group">
-            <div className="fld-header">
-              <label htmlFor="inv-horizon">Investment Horizon (Years)</label>
-              <div className="fld-input-box">
-                <input
-                  id="inv-horizon"
-                  type="number"
-                  min={1}
-                  max={30}
-                  step={1}
-                  value={years}
-                  onChange={(e) => {
-                    const v = Number(e.target.value);
-                    if (!isNaN(v)) setYears(Math.max(1, Math.min(35, v)));
-                  }}
-                  aria-label="Investment Horizon"
-                />
-                <span className="fld-suffix">Yrs</span>
-              </div>
-            </div>
-
-            <div className="fld-slider-wrap">
-              <input
-                type="range"
-                min={1}
-                max={30}
-                step={1}
-                value={years}
-                onChange={(e) => setYears(Number(e.target.value))}
-                className="custom-range"
-              />
-              <div className="range-ticks">
-                <span>1 Year</span>
-                <span>15 Years</span>
-                <span>30 Years</span>
-              </div>
-            </div>
-
-            <div className="quick-pills">
-              {[3, 5, 10, 15].map((y) => (
-                <button
-                  key={y}
-                  type="button"
-                  className={`quick-pill ${years === y ? "active" : ""}`}
-                  onClick={() => setYears(y)}
-                >
-                  {y} Years
-                </button>
-              ))}
-            </div>
+          {/* Info callout */}
+          <div className="theme-calc-tip-box">
+            <span className="tip-bulb">💡</span>
+            <p>
+              Systematic discipline and regular contributions help counter inflation while working toward
+              your long-term milestones.
+            </p>
           </div>
         </div>
 
-        {/* Right Column: Dark Summary Card + Benchmark Card */}
-        <div className="calc-summary-column">
-          {/* Dark Navy Result Card */}
-          <div className="calc-dark-card">
-            <div className="dark-card-eyebrow">TOTAL MATURITY VALUE</div>
-            <div className="dark-card-number">{formatCompactInr(totalMaturity)}</div>
-            <div className="dark-card-raw">({formatInr(totalMaturity)})</div>
+        {/* Right: 3 Stacked Cards */}
+        <div className="theme-calc-metrics-stack">
+          {/* Card 1: Maturity Value (Dark Card) */}
+          <div className="metric-card dark-maturity-card">
+            <div className="metric-top-label">
+              <TrendingUp size={15} className="metric-icon" />
+              <span>MATURITY VALUE</span>
+            </div>
+            <div className="metric-huge-number text-neon-green">
+              {formatCompactInr(totalMaturity)}
+            </div>
+            <div className="metric-sub-label">Terminal estimated outcome</div>
+          </div>
 
-            <div className="dark-card-divider" />
+          {/* Card 2: Principal Invested (White Card) */}
+          <div className="metric-card light-metric-card">
+            <div className="metric-top-label text-slate-500">
+              <span className="metric-symbol">₹</span>
+              <span>PRINCIPAL INVESTED</span>
+            </div>
+            <div className="metric-huge-number text-slate-900">
+              {formatCompactInr(totalInvested)}
+            </div>
+            <div className="metric-sub-label">Baseline Financial Requirement</div>
+          </div>
 
-            <div className="dark-card-split-stats">
-              <div className="split-stat">
-                <span className="stat-label">{isLump ? "Initial Capital" : "Total Invested"}</span>
-                <span className="stat-val">{formatCompactInr(totalInvested)}</span>
+          {/* Card 3: Estimated Gain (White Card) */}
+          <div className="metric-card light-metric-card">
+            <div className="metric-top-label text-slate-500">
+              <Sparkles size={14} className="text-emerald-500" />
+              <span>ESTIMATED GAIN</span>
+            </div>
+            <div className="metric-huge-number text-emerald-600">
+              {formatCompactInr(capitalGains)}
+            </div>
+            <div className="metric-sub-label">Compounded growth or financial benefit</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Middle Section: Table on Left, Yield Breakdown & Investor Awareness on Right */}
+      <div className="theme-calc-middle-grid">
+        {/* Left Column: Progression Table */}
+        <div className="theme-calc-table-card">
+          <div className="table-card-header">
+            <div className="table-header-col">YEAR</div>
+            <div className="table-header-col">INITIAL CAPITAL</div>
+            <div className="table-header-col text-right">
+              <span>PROJECTED VALUE</span>
+              <div className="table-nav-arrows">
+                <button
+                  type="button"
+                  className="table-nav-btn"
+                  title="Scroll to Top"
+                  onClick={() => scrollToTable("top")}
+                >
+                  Top <ChevronUp size={13} />
+                </button>
+                <button
+                  type="button"
+                  className="table-nav-btn"
+                  title="Scroll to End"
+                  onClick={() => scrollToTable("end")}
+                >
+                  End <ChevronDown size={13} />
+                </button>
               </div>
-              <div className="split-stat">
-                <span className="stat-label">Est. Capital Gain</span>
-                <span className="stat-val gain-green">+{formatCompactInr(capitalGains)}</span>
-              </div>
-            </div>
-
-            <div className="growth-multiple-row">
-              <span>Capital Growth Multiple:</span>
-              <strong className="multiple-badge">{multiple}x</strong>
-            </div>
-
-            {/* Split Progress Bar */}
-            <div className="split-progress-container">
-              <div
-                className="split-progress-principal"
-                style={{ width: `${principalPercent}%` }}
-                title={`Principal: ${principalPercent}%`}
-              />
-              <div
-                className="split-progress-gains"
-                style={{ width: `${gainsPercent}%` }}
-                title={`Gains: ${gainsPercent}%`}
-              />
-            </div>
-            <div className="split-progress-legend">
-              <span className="legend-item">
-                <i className="legend-dot principal" /> Principal ({principalPercent}%)
-              </span>
-              <span className="legend-item">
-                <i className="legend-dot gains" /> Gains ({gainsPercent}%)
-              </span>
             </div>
           </div>
 
-          {/* Light Benchmark Card (Rule of 72) */}
-          <div className="calc-benchmark-card">
-            <div className="benchmark-badge">
-              <Sparkles size={14} className="spark-icon" />
-              <span>THE RULE OF 72 BENCHMARK</span>
+          <div className="table-rows-scroll" ref={tableScrollRef}>
+            {progression.map((row) => (
+              <div className="theme-table-row" key={row.year}>
+                <div className="theme-td td-year">Year {row.year}</div>
+                <div className="theme-td td-initial">{formatCompactInr(row.initialCapital)}</div>
+                <div className="theme-td td-projected text-neon-table">
+                  {formatCompactInr(row.projectedValue)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Column: Yield Breakdown + Investor Awareness */}
+        <div className="theme-calc-middle-right">
+          {/* Yield Breakdown Donut Card */}
+          <div className="yield-breakdown-card">
+            <div className="yield-card-title">YIELD BREAKDOWN</div>
+            <div className="yield-chart-container">
+              <div className="donut-svg-wrapper">
+                <svg width="150" height="150" viewBox="0 0 130 130" className="donut-chart">
+                  {/* Background Principal Ring */}
+                  <circle
+                    cx="65"
+                    cy="65"
+                    r={donutRadius}
+                    fill="transparent"
+                    stroke="#94a3b8"
+                    strokeWidth="14"
+                  />
+                  {/* Foreground Gains Ring */}
+                  <circle
+                    cx="65"
+                    cy="65"
+                    r={donutRadius}
+                    fill="transparent"
+                    stroke="#22c55e"
+                    strokeWidth="14"
+                    strokeDasharray={`${gainsStroke} ${principalStroke}`}
+                    strokeDashoffset={circumference / 4}
+                    strokeLinecap="round"
+                    style={{ transition: "stroke-dasharray 0.3s ease" }}
+                  />
+                </svg>
+                <div className="donut-center-content">
+                  <span className="donut-center-sub">GAIN RATIO</span>
+                  <span className="donut-center-main">{gainsPercent}%</span>
+                </div>
+              </div>
+
+              <div className="donut-legend-row">
+                <div className="legend-entry">
+                  <span className="legend-color-dot dot-principal" />
+                  <span>Initial Investment</span>
+                </div>
+                <div className="legend-entry">
+                  <span className="legend-color-dot dot-gains" />
+                  <span>Compounded Gain</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Investor Awareness Dark Navy Card */}
+          <div className="investor-awareness-card">
+            <div className="awareness-header">
+              <CheckCircle2 size={15} className="text-emerald-400" />
+              <span>INVESTOR AWARENESS</span>
             </div>
 
-            <h4 className="benchmark-title">How Fast Your Capital Doubles</h4>
+            <ul className="awareness-check-list">
+              <li>
+                <CheckCircle2 size={14} className="check-icon" />
+                <span>PATIENT LONG-TERM CAPITAL COMPOUNDING</span>
+              </li>
+              <li>
+                <CheckCircle2 size={14} className="check-icon" />
+                <span>AVOIDING TIMING THE STOCK MARKET</span>
+              </li>
+              <li>
+                <CheckCircle2 size={14} className="check-icon" />
+                <span>DIVERSIFIED EQUITY FUND ALLOCATION</span>
+              </li>
+            </ul>
 
-            <p className="benchmark-desc">
-              {isLump ? (
-                <>
-                  At <strong>{rate}% CAGR</strong>, by the Rule of 72 (72 / {rate}), your capital doubles approximately every{" "}
-                  <strong>{doublingYears} years</strong>. Over {years} years, your money will multiply by{" "}
-                  <strong>{multiple} times</strong>!
-                </>
-              ) : (
-                <>
-                  With disciplined SIP investing at <strong>{rate}% CAGR</strong> over {years} years, your money multiplies by{" "}
-                  <strong>{multiple} times</strong>, generating <strong>+{formatCompactInr(capitalGains)}</strong> in pure compounded gains!
-                </>
-              )}
-            </p>
-
-            <div className="benchmark-mini-table">
-              <div className="mini-row">
-                <span>Starting Capital</span>
-                <strong>{formatCompactInr(totalInvested)}</strong>
-              </div>
-              <div className="mini-row">
-                <span>Estimated Compounded Gains</span>
-                <strong className="gain-green">+{formatCompactInr(capitalGains)}</strong>
-              </div>
-              <div className="mini-row final">
-                <span>Final Portfolio Value</span>
-                <strong>{formatCompactInr(totalMaturity)}</strong>
-              </div>
-            </div>
-
-            <Link href="/contact" className="benchmark-action-btn">
-              <span>Inquire for {isLump ? "Lumpsum" : "SIP"} Investment</span>
-              <ArrowRight size={16} />
+            <Link href="/contact" className="awareness-enquire-btn">
+              <span>Enquire with Our Team →</span>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Bottom Card: Yearly Capital Growth Progression Table */}
-      <div className="calc-card progression-card">
-        <div className="progression-header">
-          <h3 className="progression-title">Yearly Capital Growth Progression</h3>
-          <p className="progression-sub">
-            Track the compounding progression on your {formatCompactInr(totalInvested)} investment across {years} years.
-          </p>
+      {/* Bottom Full-Width Card: Compound Growth Curve */}
+      <div className="compound-growth-card">
+        <div className="growth-curve-header">
+          <span className="growth-curve-title">COMPOUND GROWTH CURVE</span>
+          <div className="growth-curve-legend">
+            <div className="legend-line-item">
+              <span className="legend-line line-future" />
+              <span>Future Value</span>
+            </div>
+            <div className="legend-line-item">
+              <span className="legend-line line-initial" />
+              <span>Initial Capital</span>
+            </div>
+          </div>
         </div>
 
-        <div className="progression-table-wrap">
-          <table className="progression-table">
-            <thead>
-              <tr>
-                <th>YEAR</th>
-                <th>{isLump ? "INITIAL PRINCIPAL" : "CUMULATIVE INVESTED"}</th>
-                <th>CUMULATIVE GAINS</th>
-                <th>TOTAL PORTFOLIO VALUE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {progression.map((row) => (
-                <tr key={row.year}>
-                  <td className="year-cell">Year {row.year}</td>
-                  <td>{formatInr(row.invested)}</td>
-                  <td className="gain-cell">+{formatInr(row.gains)}</td>
-                  <td className="total-cell">{formatInr(row.total)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="growth-svg-container">
+          <svg
+            viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+            preserveAspectRatio="none"
+            className="growth-svg"
+          >
+            <defs>
+              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+
+            {/* Baseline horizontal line for initial capital */}
+            <line
+              x1="20"
+              y1={chartHeight - 35}
+              x2={chartWidth - 20}
+              y2={chartHeight - 35}
+              stroke="#cbd5e1"
+              strokeDasharray="4 4"
+              strokeWidth="1.5"
+            />
+
+            {/* Shaded Area */}
+            {areaPath && <path d={areaPath} fill="url(#areaGradient)" />}
+
+            {/* Line Curve */}
+            {svgPath && (
+              <path
+                d={svgPath}
+                fill="none"
+                stroke="#2563eb"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            )}
+
+            {/* End Node Dot */}
+            {points.length > 0 && (
+              <circle
+                cx={points[points.length - 1].x}
+                cy={points[points.length - 1].y}
+                r="4.5"
+                fill="#2563eb"
+                stroke="#ffffff"
+                strokeWidth="2"
+              />
+            )}
+          </svg>
         </div>
       </div>
-
-      <p className="calc-compliance-note">{SIP_NOTE}</p>
     </div>
   );
 }
-

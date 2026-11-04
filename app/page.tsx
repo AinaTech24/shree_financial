@@ -2,21 +2,47 @@ import Link from "next/link";
 import GoalHero from "@/components/GoalHero";
 import ModernCalculator from "@/components/ModernCalculator";
 import FeatureTabs from "@/components/FeatureTabs";
-import LeadForm from "@/components/LeadForm";
-import ContactInfo from "@/components/ContactInfo";
-import { PARTNERS, SERVICES, TESTIMONIALS, TOOLS, WHY, SITE } from "@/content/site";
+import { PARTNERS, SERVICES, TESTIMONIALS, TOOLS, WHY, SITE, tel } from "@/content/site";
 import {
   ShieldCheck,
   CheckCircle2,
   TrendingUp,
   Award,
   ArrowRight,
-  Phone,
   Sparkles,
   Star,
-  Users,
-  Compass,
+  Phone,
+  MessageCircle,
+  Clock,
+  Layers,
 } from "lucide-react";
+
+const SERVICE_TAGS: Record<string, string> = {
+  "mutual-funds": "Wealth Creation",
+  "goal-based-mutual-fund-investing": "Life Milestones",
+  pms: "HNI Direct Equity",
+  retirement: "Monthly Income / SWP",
+  "child-marriage": "Future Security",
+  education: "Higher Studies",
+  bonds: "Fixed Income",
+};
+
+const SERVICE_DESCS: Record<string, string> = {
+  "mutual-funds":
+    "Participate in India's economic growth through equity, hybrid, debt, and liquid funds tailored to your risk horizon.",
+  "goal-based-mutual-fund-investing":
+    "Map your SIPs and lumpsum portfolios to concrete milestones like home purchase, emergency funds, and financial independence.",
+  pms:
+    "Discretionary and non-discretionary portfolio management services for high net-worth individuals and corporate treasuries.",
+  retirement:
+    "Build an inflation-indexed retirement nest egg engineered to generate steady, tax-efficient monthly pension cashflows.",
+  "child-marriage":
+    "Ring-fenced disciplined compounding strategy to celebrate your child's wedding milestone completely debt-free.",
+  education:
+    "Ensure top-tier university education in India and abroad without financial strain through target-date SIP investments.",
+  bonds:
+    "Preserve capital and secure predictable recurring yields with government securities, sovereign gold bonds, and AAA corporate debt.",
+};
 
 export default function Home() {
   return (
@@ -48,7 +74,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 3. Redesigned Services Showcase */}
+      {/* 3. Services Section - Modern All-Services Card Grid */}
       <section className="section white" id="services">
         <div className="wrap">
           <div className="sec-head center">
@@ -60,39 +86,46 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="svc-modern-grid">
+          <div className="svc-cards-grid">
             {SERVICES.map((s) => (
-              <Link href={`/${s.slug}`} className="svc-modern-card" key={s.slug}>
-                <div className="svc-card-icon-bubble">
-                  <img src={s.icon} alt={s.label} />
+              <div className="svc-card-modern" key={s.slug}>
+                <div className="svc-card-top">
+                  <div className="svc-card-icon-bubble">
+                    <img src={s.icon} alt={s.label} className="svc-card-icon-img" />
+                  </div>
+                  <span className="svc-card-badge">{SERVICE_TAGS[s.slug] || "Investment"}</span>
                 </div>
+
                 <h3 className="svc-card-title">{s.label}</h3>
                 <p className="svc-card-desc">
-                  Tailored distribution and systematic execution designed for your financial journey.
+                  {SERVICE_DESCS[s.slug] ||
+                    "Tailored distribution and systematic execution designed for your financial journey."}
                 </p>
-                <div className="svc-card-bottom">
-                  <span className="svc-link-text">Explore Service</span>
-                  <ArrowRight size={16} className="svc-arrow-icon" />
-                </div>
-              </Link>
-            ))}
 
-            <div className="svc-modern-card svc-cta-highlight">
-              <div className="cta-highlight-inner">
-                <span className="cta-mini-badge">Expert Consultation</span>
-                <h3>Need Custom Financial Guidance?</h3>
-                <p>Speak directly with our AMFI-registered distributor to map your portfolio to life goals.</p>
-                <Link href="/contact" className="btn btn-gold">
-                  <span>Talk to Our Team</span>
-                  <ArrowRight size={15} />
-                </Link>
+                <div className="svc-card-features">
+                  <div className="svc-card-feat-item">
+                    <CheckCircle2 size={13} className="text-emerald-500" />
+                    <span>100% Paperless Execution</span>
+                  </div>
+                  <div className="svc-card-feat-item">
+                    <CheckCircle2 size={13} className="text-emerald-500" />
+                    <span>AMFI Compliant Guidance</span>
+                  </div>
+                </div>
+
+                <div className="svc-card-footer">
+                  <Link href={`/${s.slug}`} className="svc-card-btn">
+                    <span>Explore Service</span>
+                    <ArrowRight size={15} />
+                  </Link>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 4. Calculator Layout Redesign (Matching Image 1) */}
+      {/* 4. Calculator Showcase */}
       <section className="section calculator-showcase-section" id="calculator">
         <div className="wrap">
           <div className="sec-head center">
@@ -144,7 +177,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Tools & Utilities Section */}
+      {/* 6. Digital Tools Section */}
       <section className="section" id="tools">
         <div className="wrap">
           <div className="sec-head center">
@@ -226,33 +259,54 @@ export default function Home() {
             <p>Committed to ethical financial distribution and personalized family wealth advisory.</p>
           </div>
 
-          <div className="partners-modern-grid">
+          <div className="team-cards-grid">
             {PARTNERS.map((p) => (
-              <div className="partner-modern-card" key={p.name}>
-                <div className="partner-avatar-circle">
-                  <span>{p.name.replace(/^(Mr|Mrs)\.\s*/, "").charAt(0)}</span>
+              <div className="team-member-card" key={p.name}>
+                <div className="member-image-wrap">
+                  <img
+                    src={p.image || "/img/misc/user.gif"}
+                    alt={p.name}
+                    className="member-portrait-img"
+                    loading="lazy"
+                  />
+                  {p.badge && <span className="member-badge-floating">{p.badge}</span>}
                 </div>
-                <h4 className="partner-name">{p.name}</h4>
-                <p className="partner-role">{p.role}</p>
+                <div className="member-card-body">
+                  <span className="member-exp-tag">{p.exp || "10+ YEARS EXPERIENCE"}</span>
+                  <h3 className="member-name">{p.name}</h3>
+                  <h4 className="member-role">{p.role}</h4>
+                  <p className="member-bio">{p.bio}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 10. Contact / Consultation Section */}
-      <section className="section contact-home-section" id="contact">
+      {/* 10. Simple & Clean CTA Section */}
+      <section className="section simple-cta-section" id="consultation">
         <div className="wrap">
-          <div className="sec-head center">
-            <span className="eyebrow">Get In Touch</span>
-            <h2>Begin Your Financial Journey Today</h2>
-            <p>Reach out to our office in Khambhat, Gujarat or drop an online enquiry.</p>
-          </div>
-
-          <div className="contact-modern-grid">
-            <ContactInfo />
-            <div className="contact-form-holder">
-              <LeadForm showService={true} subject="Website Homepage Consultation Enquiry" />
+          <div className="simple-cta-card">
+            <div className="simple-cta-text">
+              <h2>Ready to Begin Your Financial Journey?</h2>
+              <p>
+                Speak directly with our AMFI-registered team in Khambhat to align your mutual fund investments with your life goals.
+              </p>
+            </div>
+            <div className="simple-cta-actions">
+              <Link href="/contact" className="btn btn-primary simple-cta-btn">
+                <span>Talk to Our Experts</span>
+                <ArrowRight size={16} />
+              </Link>
+              <a
+                href={`https://wa.me/${SITE.whatsapp}?text=Hello%20Shah%20Financial%20Services,%20I%20would%20like%20to%20know%20more%20about%20your%20services.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-ghost simple-wa-btn"
+              >
+                <MessageCircle size={16} />
+                <span>WhatsApp</span>
+              </a>
             </div>
           </div>
         </div>

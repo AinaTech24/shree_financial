@@ -61,9 +61,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const doc = L[slug];
   if (!doc) notFound();
 
-  // If this is the commission disclosures page, embed the PDF viewer alongside the table!
-  const isCommissionPage = slug === "commission-disclosures";
-
   return (
     <>
       <PageHero
@@ -78,17 +75,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <article className="sec-card prose legal" style={{ padding: "40px 48px", borderRadius: "20px" }}>
             <div dangerouslySetInnerHTML={{ __html: doc.html }} />
           </article>
-
-          {isCommissionPage && (
-            <div style={{ marginTop: 48 }}>
-              <div className="sec-head" style={{ marginBottom: 24 }}>
-                <span className="eyebrow">Direct AMC Structures</span>
-                <h2>Scheme-Wise Brokerage &amp; Commission Files</h2>
-                <p>Click "Show PDF" to view or download original AMC brokerage schedule documents.</p>
-              </div>
-              <CommissionPdfViewer />
-            </div>
-          )}
         </div>
       </section>
     </>

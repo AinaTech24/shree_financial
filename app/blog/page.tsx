@@ -1,26 +1,25 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import PageHero from "@/components/PageHero";
-import posts from "@/content/blog.json";
+import LiveBlogFeed from "@/components/LiveBlogFeed";
 
-export const metadata: Metadata = { title: "Blog" };
+export const metadata: Metadata = {
+  title: "Financial Knowledge & Live Market Feeds | Shah Financial Services",
+  description:
+    "Stay informed with real-time financial market intelligence, mutual fund insights, SIP guides, and economic trends from MoneyControl, Economic Times, and Mint.",
+};
 
-export default function Page() {
+export default function BlogPage() {
   return (
     <>
-      <PageHero title="Blog" />
-      <section className="section tight">
-        <div className="wrap blog-grid">
-          {posts.map((p) => (
-            <Link href={`/blog/${p.id}`} className="blog-card" key={p.id}>
-              <img src={p.img} alt="" />
-              <div>
-                <span className="tag">{p.cat}</span>
-                <h3>{p.title}</h3>
-                <span className="more">Read More →</span>
-              </div>
-            </Link>
-          ))}
+      <PageHero
+        title="Knowledge Hub & Market Insights"
+        sub="Real-time financial intelligence curated from India's leading financial authorities to empower your wealth decisions."
+        trail={[{ label: "Home", href: "/" }]}
+      />
+
+      <section className="section tight blog-main-section">
+        <div className="wrap">
+          <LiveBlogFeed />
         </div>
       </section>
     </>

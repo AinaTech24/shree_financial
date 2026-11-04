@@ -222,48 +222,26 @@ export default function DedicatedServiceView({ slug, service }: ServiceViewProps
       {/* Hero Section */}
       <section className="service-hero-section">
         <div className="wrap">
-          <div className="service-hero-grid">
-            <div className="service-hero-content">
-              <div className="service-category-badge">
-                <Sparkles size={14} className="sparkle-icon" />
-                <span>{meta.categoryBadge}</span>
-              </div>
-
-              <h1 className="service-hero-title">{service.title}</h1>
-
-              <p className="service-hero-lead">{meta.heroSubtitle}</p>
-
-              <div className="service-trust-tags">
-                <span className="trust-tag">
-                  <ShieldCheck size={16} /> AMFI Registered (ARN-173086)
-                </span>
-                <span className="trust-tag">
-                  <CheckCircle2 size={16} /> 100% Paperless Process
-                </span>
-                <span className="trust-tag">
-                  <Award size={16} /> Serving Since 2007
-                </span>
-              </div>
-
-              <div className="service-cta-row">
-                <Link href="/contact" className="btn btn-primary">
-                  <span>Start Investing Today</span>
-                  <ArrowRight size={16} />
-                </Link>
-                <a href={tel(SITE.phones[0])} className="btn btn-ghost">
-                  <Phone size={16} />
-                  <span>Call: {SITE.phones[0]}</span>
-                </a>
-              </div>
+          <div className="service-hero-clean-container">
+            <div className="service-category-badge">
+              <Sparkles size={14} className="sparkle-icon" />
+              <span>{meta.categoryBadge}</span>
             </div>
 
-            {/* Quick Consultation Card */}
-            <div className="service-hero-card">
-              <div className="hero-lead-card">
-                <h3>Get Personal Advice</h3>
-                <p>Have questions about {service.title}? Speak with an experienced AMFI registered distributor.</p>
-                <LeadForm showService={false} subject={`Enquiry: ${service.title}`} />
-              </div>
+            <h1 className="service-hero-title">{service.title}</h1>
+
+            <p className="service-hero-lead">{meta.heroSubtitle}</p>
+
+            <div className="service-trust-tags">
+              <span className="trust-tag">
+                <ShieldCheck size={16} /> AMFI Registered (ARN-173086)
+              </span>
+              <span className="trust-tag">
+                <CheckCircle2 size={16} /> 100% Paperless Process
+              </span>
+              <span className="trust-tag">
+                <Award size={16} /> Serving Since 2007
+              </span>
             </div>
           </div>
         </div>
