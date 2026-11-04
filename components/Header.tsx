@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef } from "react";
 import { SERVICES, SITE, tel } from "@/content/site";
+<<<<<<< HEAD
 import {
   Phone,
   Mail,
@@ -24,6 +25,9 @@ const SERVICE_TAGS: Record<string, string> = {
   education: "Target-date higher studies in India & overseas",
   bonds: "Fixed coupon government & corporate debt securities",
 };
+=======
+import { Phone, Mail, ChevronDown, Menu, X, UserCheck } from "lucide-react";
+>>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
 
 export default function Header() {
   const path = usePathname();
@@ -152,6 +156,7 @@ export default function Header() {
               </div>
             </li>
 
+<<<<<<< HEAD
             {/* Calculators: Direct Link */}
             <li>
               <Link
@@ -168,6 +173,31 @@ export default function Header() {
                 href="/blog"
                 className={`nav-link ${path.startsWith("/blog") ? "active" : ""}`}
               >
+=======
+            {/* Calculators Dropdown */}
+            <li className="nav-dropdown-item">
+              <button
+                className={`nav-link ${path.includes("calc") ? "active" : ""}`}
+                aria-haspopup="true"
+              >
+                Calculators <ChevronDown size={14} className="chevron-icon" />
+              </button>
+              <div className="dd">
+                <Link href="/calculator" className="dd-item">
+                  <strong>Calculators Hub (14 Tools)</strong>
+                </Link>
+                <Link href="/investment-calculators" className="dd-item">
+                  Investment &amp; Goal Calculators
+                </Link>
+                <Link href="/mf-tools-calculators" className="dd-item">
+                  MF Performance Calculators
+                </Link>
+              </div>
+            </li>
+
+            <li>
+              <Link href="/blog" className={act("/blog")}>
+>>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
                 Blog
               </Link>
             </li>
@@ -202,8 +232,30 @@ export default function Header() {
           <nav className="mobile-nav" onClick={(e) => (e.target as HTMLElement).closest("a") && close()}>
             <Link href="/">Home</Link>
             <Link href="/about">About Us</Link>
+<<<<<<< HEAD
             <Link href="/services">Services</Link>
             <Link href="/calculator">Calculators</Link>
+=======
+            <details>
+              <summary>Services</summary>
+              <div className="mobile-sub">
+                <Link href="/services">All Services Overview</Link>
+                {SERVICES.map((s) => (
+                  <Link key={s.slug} href={`/${s.slug}`}>
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            </details>
+            <details>
+              <summary>Calculators</summary>
+              <div className="mobile-sub">
+                <Link href="/calculator">Calculators Hub (All 14)</Link>
+                <Link href="/investment-calculators">Investment Calculators</Link>
+                <Link href="/mf-tools-calculators">MF Tools Calculators</Link>
+              </div>
+            </details>
+>>>>>>> f79a62daf99d52674dfc4ea3f048d39e8db3d898
             <Link href="/blog">Blog</Link>
             <Link href="/contact">Contact Us</Link>
             <Link href="/login" className="mobile-login-btn">
