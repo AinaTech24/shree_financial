@@ -1,24 +1,41 @@
 "use client";
-import { useState } from "react";
+
+import React, { useState } from "react";
 import { FEATURES } from "@/content/site";
+import {
+  LineChart,
+  RefreshCw,
+  Target,
+  Search,
+} from "lucide-react";
+
+const FEATURE_ICONS: Record<string, React.ReactNode> = {
+  "Portfolio Analysis": <LineChart size={24} className="text-blue-600" />,
+  "Invest Online": <RefreshCw size={24} className="text-blue-600" />,
+  "Goal Tracker": <Target size={24} className="text-blue-600" />,
+  "Research": <Search size={24} className="text-blue-600" />,
+};
 
 export default function FeatureTabs() {
-  const [i, setI] = useState(0);
+  const [activeIdx, setActiveIdx] = useState(0);
+
   return (
-    <div className="feat-grid-layout">
-      {FEATURES.map((f, n) => (
+    <div className="platform-features-cards-grid">
+      {FEATURES.map((f, idx) => (
         <div
           key={f.title}
-          className={`feat-grid-card ${n === i ? "on" : ""}`}
-          onMouseEnter={() => setI(n)}
-          onClick={() => setI(n)}
+          className={`platform-feature-card ${idx === activeIdx ? "active" : ""}`}
+          onMouseEnter={() => setActiveIdx(idx)}
+          onClick={() => setActiveIdx(idx)}
         >
-          <div className="feat-grid-icon">
-            <img src={f.icon} alt="" />
+          <div className="feature-icon-container">
+            {FEATURE_ICONS[f.title] || (
+              <img src={f.icon} alt={f.title} className="feature-icon-img" />
+            )}
           </div>
-          <div className="feat-grid-text">
-            <h3>{f.title}</h3>
-            <p>{f.text}</p>
+          <div className="feature-text-container">
+            <h3 className="feature-card-title">{f.title}</h3>
+            <p className="feature-card-desc">{f.text}</p>
           </div>
         </div>
       ))}

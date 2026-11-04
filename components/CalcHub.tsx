@@ -119,19 +119,9 @@ export function CalcHub({ calcs }: { calcs: Calc[] }) {
 
 /** Full single calculator view — used on /calculator/[slug] individual pages */
 export function SingleCalcView({ calc }: { calc: Calc }) {
-  const meta = getCalcMeta(calc.slug);
-
-  if (meta.isNative && "mode" in meta && meta.mode) {
-    return (
-      <div className="single-calc-view">
-        <ModernCalculator key={meta.mode} initialMode={meta.mode} showModeSwitcher={false} />
-      </div>
-    );
-  }
-
   return (
     <div className="single-calc-view">
-      <CalcFrame calc={calc} />
+      <ModernCalculator key={calc.slug} slug={calc.slug} />
     </div>
   );
 }

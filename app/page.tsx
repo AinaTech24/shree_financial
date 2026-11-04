@@ -1,6 +1,5 @@
 import Link from "next/link";
 import GoalHero from "@/components/GoalHero";
-import ModernCalculator from "@/components/ModernCalculator";
 import FeatureTabs from "@/components/FeatureTabs";
 import HomeNewsWidget from "@/components/HomeNewsWidget";
 import { SERVICES, TESTIMONIALS, TOOLS, WHY, SITE } from "@/content/site";
@@ -121,31 +120,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Calculator Showcase */}
-      <section className="section calculator-showcase-section" id="calculator">
-        <div className="wrap">
-          <div className="sec-head center">
-            <span className="eyebrow">Interactive Compounding</span>
-            <h2>Experience The Power Of Compounding</h2>
-            <p>
-              Forecast your capital growth with our Lumpsum &amp; SIP calculators, featuring Rule of 72 doubling
-              benchmarks and year-by-year compounding progressions.
-            </p>
-          </div>
-
-          <ModernCalculator initialMode="lumpsum" showModeSwitcher={true} />
-
-          <div className="calculator-more-link-row">
-            <span>Looking for STP, SWP, Retirement, or Loan calculators?</span>
-            <Link href="/calculator" className="btn btn-ghost">
-              <span>View All 14 Calculators Hub</span>
-              <ArrowRight size={15} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Why Choose Shah Financial Services */}
+      {/* 4. Why Choose Shah Financial Services */}
       <section className="section white">
         <div className="wrap">
           <div className="sec-head center">
@@ -169,6 +144,93 @@ export default function Home() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Interactive Calculators (3 Core Cards On Top of Modern Tools) */}
+      <section className="section white" id="calculators">
+        <div className="wrap">
+          <div className="sec-head center">
+            <span className="eyebrow">Interactive Compounding</span>
+            <h2>Financial Planning Calculators</h2>
+            <p>
+              Explore our core wealth calculators to project future corpus growth, systematic SIP compounding, and milestone targets.
+            </p>
+          </div>
+
+          <div className="landing-calc-3cards-grid">
+            <div className="landing-calc-card">
+              <div className="calc-card-badge-row">
+                <span className="calc-badge-popular">MOST POPULAR</span>
+              </div>
+              <h3 className="landing-calc-title">SIP Calculator</h3>
+              <p className="landing-calc-desc">
+                Calculate prospective wealth creation and rupee cost averaging via disciplined monthly systematic investments.
+              </p>
+              <div className="landing-calc-preview">
+                <div className="calc-preview-stat">
+                  <span>Sample Monthly SIP</span>
+                  <strong>₹10,000 / mo</strong>
+                </div>
+                <div className="calc-preview-stat">
+                  <span>10-Yr Compounding</span>
+                  <strong className="text-emerald-600">₹23.23 Lakhs</strong>
+                </div>
+              </div>
+              <Link href="/calculator/sip-calculator" className="landing-calc-btn">
+                <span>Calculate Now</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className="landing-calc-card">
+              <div className="calc-card-badge-row">
+                <span className="calc-badge-growth">COMPOUNDING</span>
+              </div>
+              <h3 className="landing-calc-title">Lumpsum Calculator</h3>
+              <p className="landing-calc-desc">
+                Estimate prospective wealth growth for one-time investments with Rule of 72 doubling frequency benchmarks.
+              </p>
+              <div className="landing-calc-preview">
+                <div className="calc-preview-stat">
+                  <span>Sample Investment</span>
+                  <strong>₹1,00,000</strong>
+                </div>
+                <div className="calc-preview-stat">
+                  <span>10-Yr Compounding</span>
+                  <strong className="text-emerald-600">₹3.11 Lakhs</strong>
+                </div>
+              </div>
+              <Link href="/calculator/lumpsum-calculator" className="landing-calc-btn">
+                <span>Calculate Now</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className="landing-calc-card highlight-hub-card">
+              <div className="calc-card-badge-row">
+                <span className="calc-badge-hub">ALL 14 TOOLS</span>
+              </div>
+              <h3 className="landing-calc-title">Retirement &amp; Goal Calculators</h3>
+              <p className="landing-calc-desc">
+                Full suite of planning tools including Retirement Corpus, Higher Education, Child Wedding, SWP, STP, and Loan EMIs.
+              </p>
+              <div className="landing-calc-preview">
+                <div className="calc-preview-stat">
+                  <span>Milestone Calculators</span>
+                  <strong>14 Tools Available</strong>
+                </div>
+                <div className="calc-preview-stat">
+                  <span>Platform Access</span>
+                  <strong className="text-blue-600">100% Free</strong>
+                </div>
+              </div>
+              <Link href="/calculator" className="landing-calc-btn btn-hub-highlight">
+                <span>View All 14 Calculators</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

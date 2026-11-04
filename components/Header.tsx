@@ -8,21 +8,20 @@ import {
   Phone,
   Mail,
   ChevronDown,
+  ChevronRight,
   Menu,
   X,
-  ShieldCheck,
   UserCheck,
-  ArrowRight,
 } from "lucide-react";
 
 const SERVICE_TAGS: Record<string, string> = {
-  "mutual-funds": "Equity, Debt, Hybrid & Liquid Systematic SIPs",
+  "mutual-funds": "Systematic SIP & long-term compounding",
   "goal-based-mutual-fund-investing": "Purpose-driven milestone wealth creation",
-  pms: "Discretionary & non-discretionary HNI portfolios",
-  retirement: "Inflation-indexed corpus & monthly SWP cashflows",
-  "child-marriage": "Dedicated ring-fenced wedding milestone corpus",
-  education: "Target-date higher studies in India & overseas",
-  bonds: "Fixed coupon government & corporate debt securities",
+  pms: "Bespoke HNI portfolio management",
+  retirement: "Inflation-proof corpus & monthly SWP",
+  "child-marriage": "Dedicated long-term wedding corpus",
+  education: "Domestic & overseas higher studies",
+  bonds: "Fixed income & capital protection",
 };
 
 export default function Header() {
@@ -96,7 +95,7 @@ export default function Header() {
               </Link>
             </li>
 
-            {/* Services Dropdown (Spacious, No Icons) */}
+            {/* Services Dropdown (Image 3 Style: Clean Vertical List with Subtitle and Right Chevron) */}
             <li
               className={`nav-dropdown-item ${activeDropdown === "services" ? "is-open" : ""}`}
               onMouseEnter={() => handleMouseEnter("services")}
@@ -109,46 +108,42 @@ export default function Header() {
               >
                 Services <ChevronDown size={14} className="chevron-icon" />
               </Link>
+
               <div
-                className={`dd dd-spacious-services ${activeDropdown === "services" ? "open" : ""}`}
+                className={`dd dd-vertical-services ${activeDropdown === "services" ? "open" : ""}`}
                 onMouseEnter={() => handleMouseEnter("services")}
                 onMouseLeave={handleMouseLeave}
               >
-                <div className="dd-spacious-header">
-                  <div>
-                    <span className="dd-spacious-eyebrow">Wealth Management &amp; Distribution</span>
-                    <h4 className="dd-spacious-title">Explore Our Financial Solutions</h4>
+                {/* 1. All Services Top Link */}
+                <Link
+                  href="/services"
+                  className="dd-vertical-item"
+                  onClick={close}
+                >
+                  <div className="dd-item-text-stack">
+                    <strong className="dd-item-title">All Services</strong>
+                    <span className="dd-item-sub">Explore complete financial solutions</span>
                   </div>
-                  <Link href="/services" className="dd-view-all-btn" onClick={close}>
-                    <span>View All Services Overview</span>
-                    <ArrowRight size={14} />
+                  <ChevronRight size={14} className="dd-item-arrow" />
+                </Link>
+
+                {/* 2. Service Items */}
+                {SERVICES.map((s) => (
+                  <Link
+                    key={s.slug}
+                    href={`/${s.slug}`}
+                    className="dd-vertical-item"
+                    onClick={close}
+                  >
+                    <div className="dd-item-text-stack">
+                      <strong className="dd-item-title">{s.label}</strong>
+                      <span className="dd-item-sub">
+                        {SERVICE_TAGS[s.slug] || "Tailored financial planning"}
+                      </span>
+                    </div>
+                    <ChevronRight size={14} className="dd-item-arrow" />
                   </Link>
-                </div>
-
-                <div className="dd-services-layout">
-                  {SERVICES.map((s) => (
-                    <Link
-                      key={s.slug}
-                      href={`/${s.slug}`}
-                      className="dd-service-item-noicon"
-                      onClick={close}
-                    >
-                      <div className="dd-service-text">
-                        <strong className="dd-service-name">{s.label}</strong>
-                        <p className="dd-service-desc">
-                          {SERVICE_TAGS[s.slug] || "Tailored distribution & planning"}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-
-                <div className="dd-spacious-footer">
-                  <div className="dd-trust-line">
-                    <ShieldCheck size={14} className="text-emerald-600" />
-                    <span>AMFI Registered Distributor ARN-173086 • Serving Investors Since 2007</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </li>
 
@@ -180,10 +175,15 @@ export default function Header() {
             </li>
 
             <li>
-              <Link href="/login" className="login-btn">
+              <a
+                href="https://shahfs.com/login.php"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="login-btn"
+              >
                 <UserCheck size={16} />
                 <span>Portfolio Login</span>
-              </Link>
+              </a>
             </li>
           </ul>
 
@@ -206,9 +206,14 @@ export default function Header() {
             <Link href="/calculator">Calculators</Link>
             <Link href="/blog">Blog</Link>
             <Link href="/contact">Contact Us</Link>
-            <Link href="/login" className="mobile-login-btn">
+            <a
+              href="https://shahfs.com/login.php"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-login-btn"
+            >
               Portfolio Login
-            </Link>
+            </a>
           </nav>
         )}
       </header>
