@@ -33,8 +33,8 @@ export default function GoalHero() {
         <div className="hero-active-grid">
           <div className="hero-copy-col">
             <div className="hero-goal-eyebrow">
-              <Sparkles size={14} className="sparkle-icon" />
-              <span>Targeted Goal Planning</span>
+              {/* <Sparkles size={14} className="sparkle-icon" /> */}
+              {/* <span>Targeted Goal </span> */}
             </div>
 
             <h1 className="hero-headline">

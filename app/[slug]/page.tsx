@@ -72,7 +72,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       />
       <section className="section tight">
         <div className="wrap">
-          <article className="sec-card prose legal" style={{ padding: "40px 48px", borderRadius: "20px" }}>
+          <article className="sec-card prose legal legal-doc-card">
             <div dangerouslySetInnerHTML={{ __html: doc.html }} />
           </article>
         </div>

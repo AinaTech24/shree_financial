@@ -24,7 +24,7 @@ const target = `      {/* 10. Modern High-Impact CTA Section (Replacing Contact 
                 </div>
                 <div className="cta-point">
                   <CheckCircle2 size={16} className="text-emerald-400" />
-                  <span>Zero Direct Advisory Fees</span>
+                  <span>Zero Direct Fees</span>
                 </div>
                 <div className="cta-point">
                   <CheckCircle2 size={16} className="text-emerald-400" />

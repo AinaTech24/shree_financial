@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -12,6 +12,12 @@ const roboto = Roboto({
   variable: "--font-roboto",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: { default: "Shah Financial Services | AMFI Registered Mutual Fund Distributor", template: "%s | Shah Financial Services" },

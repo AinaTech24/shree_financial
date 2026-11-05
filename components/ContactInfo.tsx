@@ -5,7 +5,7 @@ export default function ContactInfo() {
   return (
     <div className="contact-info-card-redesign">
       <div className="ci-badge-row">
-        <span className="ci-category-pill">Head Office &amp; Advisory Desk</span>
+        <span className="ci-category-pill">Head Office &amp; Desk</span>
       </div>
 
       <h3 className="ci-title">Talk to Our Financial Experts</h3>

@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import PageHero from "@/components/PageHero";
 import { AMC_DISCLOSURES, AmcPdf } from "@/content/amcs";
-import { Eye, ExternalLink, FileText, Search, ShieldCheck, X } from "lucide-react";
+import { Eye, ExternalLink, Download, FileText, Search, ShieldCheck, X } from "lucide-react";
 
 export default function SchemeWiseCommissionTablePage() {
   const [search, setSearch] = useState("");
   const [activePdf, setActivePdf] = useState<AmcPdf | null>(null);
 
+  // Filter only Mutual Fund disclosures and match search term
   const mfDisclosures = useMemo(() => {
     const list = AMC_DISCLOSURES.filter((item) => item.category === "Mutual Fund");
     const q = search.trim().toLowerCase();
@@ -19,6 +20,29 @@ export default function SchemeWiseCommissionTablePage() {
         item.code.toLowerCase().includes(q)
     );
   }, [search]);
+
+  const totalMfCount = useMemo(
+    () => AMC_DISCLOSURES.filter((item) => item.category === "Mutual Fund").length,
+    []
+  );
+
+  // Lock body scroll when modal is active, and listen to Escape key
+  useEffect(() => {
+    if (activePdf) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setActivePdf(null);
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [activePdf]);
 
   return (
     <>
@@ -35,154 +59,249 @@ export default function SchemeWiseCommissionTablePage() {
         <div className="wrap">
           <div className="sec-head">
             <span className="eyebrow">Regulatory Transparency</span>
-            <h2>Mutual Fund</h2>
+            <h2>Mutual Fund Disclosures</h2>
             <p>
               Review official brokerage and trail commission structures for each individual Asset Management Company (AMC).
             </p>
           </div>
 
-          {/* Search Bar */}
-          <div className="mb-6 max-w-md">
-            <div className="relative flex items-center">
-              <Search size={16} className="absolute left-3.5 text-slate-400 pointer-events-none" />
+          {/* Search and Filter Count Bar */}
+          <div className="disclosure-filter-bar">
+            <div className="search-input-wrap">
+              <Search size={18} className="search-icon" />
               <input
                 type="text"
-                placeholder="Search AMC (e.g. HDFC, SBI, ICICI, Nippon...)"
+                placeholder="Search AMC (e.g. HDFC, SBI, ICICI, Nippon, Axis...)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
+                className="search-input"
+                aria-label="Search Asset Management Companies"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch("")}
-                  className="absolute right-3 text-slate-400 hover:text-slate-600 text-xs font-semibold"
+                  className="clear-btn"
+                  aria-label="Clear search input"
                 >
-                  Clear
+                  <X size={16} />
                 </button>
               )}
             </div>
+            <div className="filter-count">
+              Showing <strong>{mfDisclosures.length}</strong> of <strong>{totalMfCount}</strong> AMC Disclosures
+            </div>
           </div>
 
-          <div className="table-responsive-wrapper">
+          {/* Desktop Table View (>= 768px) */}
+          <div className="table-responsive-wrapper table-desktop-view">
             <table className="clean-compliance-table">
               <thead>
                 <tr>
-                  <th style={{ width: "80px", textAlign: "center" }}>Sr. No</th>
+                  <th style={{ width: "70px", textAlign: "center" }}>Sr. No</th>
                   <th>AMC Name</th>
-                  <th style={{ width: "220px" }}>Disclosure Period</th>
-                  <th style={{ width: "180px", textAlign: "center" }}>Action</th>
+                  <th style={{ width: "200px" }}>Disclosure Period</th>
+                  <th style={{ width: "170px", textAlign: "center" }}>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {mfDisclosures.map((amc, idx) => (
-                  <tr key={amc.code}>
-                    <td style={{ textAlign: "center", fontWeight: 700, color: "#64748b" }}>
-                      {idx + 1}
-                    </td>
-                    <td>
-                      <div className="amc-name-cell">
-                        <FileText size={18} className="text-indigo-600 flex-shrink-0" />
-                        <div>
-                          <strong>{amc.name}</strong>
-                          <span className="amc-code-badge">{amc.code}</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td style={{ color: "#475569", fontSize: "14px" }}>
-                      {amc.period}
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      <div className="inline-flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setActivePdf(amc)}
-                          className="btn-show-pdf"
-                          title="View PDF directly in page"
-                        >
-                          <Eye size={14} />
-                          <span>Show</span>
-                        </button>
-                        <a
-                          href={`/AMCs/${encodeURIComponent(amc.fileName)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-view-tab"
-                          title="Open PDF in new tab"
-                        >
-                          <ExternalLink size={13} />
-                        </a>
-                      </div>
+                {mfDisclosures.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="empty-search-td">
+                      No AMCs found matching &quot;{search}&quot;. Please try a different search keyword.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  mfDisclosures.map((amc, idx) => (
+                    <tr key={amc.code}>
+                      <td style={{ textAlign: "center", fontWeight: 700, color: "#64748b" }}>
+                        {idx + 1}
+                      </td>
+                      <td>
+                        <div className="amc-name-cell">
+                          <div className="amc-icon-badge">
+                            <FileText size={16} />
+                          </div>
+                          <div className="amc-name-text">
+                            <strong>{amc.name}</strong>
+                            <span className="amc-code-badge">{amc.code}</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td style={{ color: "#475569", fontSize: "14px" }}>
+                        {amc.period}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <div className="table-actions-group">
+                          <button
+                            type="button"
+                            onClick={() => setActivePdf(amc)}
+                            className="btn-show-pdf"
+                            title="View PDF directly in popup window"
+                          >
+                            <Eye size={14} />
+                            <span>Show</span>
+                          </button>
+                          <a
+                            href={`/AMCs/${encodeURIComponent(amc.fileName)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-view-tab"
+                            title="Open PDF directly in new browser tab"
+                          >
+                            <ExternalLink size={14} />
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
 
+          {/* Mobile Cards View (< 768px) - 100% visible, no horizontal cutoff */}
+          <div className="amc-mobile-card-list table-mobile-cards-view">
+            {mfDisclosures.length === 0 ? (
+              <div className="empty-search-card">
+                No AMCs found matching &quot;{search}&quot;. Please try a different search keyword.
+              </div>
+            ) : (
+              mfDisclosures.map((amc, idx) => (
+                <div key={amc.code} className="amc-mobile-card">
+                  <div className="amc-mobile-card-top">
+                    <span className="amc-mobile-sr">#{idx + 1}</span>
+                    <div className="amc-mobile-info">
+                      <h4 className="amc-mobile-title">{amc.name}</h4>
+                      <span className="amc-code-badge">{amc.code}</span>
+                    </div>
+                  </div>
+
+                  <div className="amc-mobile-meta">
+                    <span className="amc-meta-label">Brokerage Schedule:</span>
+                    <span className="amc-meta-value">{amc.period}</span>
+                  </div>
+
+                  <div className="amc-mobile-actions">
+                    <button
+                      type="button"
+                      onClick={() => setActivePdf(amc)}
+                      className="btn-mobile-show"
+                    >
+                      <Eye size={15} />
+                      <span>Show PDF</span>
+                    </button>
+                    <a
+                      href={`/AMCs/${encodeURIComponent(amc.fileName)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-mobile-tab"
+                    >
+                      <ExternalLink size={14} />
+                      <span>Open in Tab</span>
+                    </a>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
           {/* Statutory Note */}
-          <div className="compliance-disclaimer-box mt-10">
-            <div className="flex items-start gap-3">
-              <ShieldCheck size={20} className="text-emerald-600 flex-shrink-0 mt-1" />
-              <div className="text-xs text-slate-600 leading-relaxed">
-                <strong>Statutory Note on Commission:</strong> As per SEBI regulations, all trail commissions are embedded in the Base Expense Ratio (BER) of the regular plan of respective schemes and are paid directly by the AMCs. No separate distribution fee or advisory charge is levied on investors by Shah Financial Services (ARN-173086).
+          <div className="compliance-disclaimer-box" style={{ marginTop: "32px" }}>
+            <div className="statutory-content-row">
+              <ShieldCheck size={22} className="statutory-shield-icon" />
+              <div className="statutory-text">
+                <strong>Statutory Note on Commission:</strong> As per SEBI regulations, all trail commissions are embedded in the Base Expense Ratio (BER) of the regular plan of respective schemes and are paid directly by the AMCs. No separate distribution fee or charge is levied on investors by Shah Financial Services (ARN-173086).
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* PDF Modal Viewer (Opens directly on screen without downloading) */}
+      {/* Floating Popup Modal Dialog */}
       {activePdf && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/75 backdrop-blur-sm"
+          className="pdf-modal-backdrop"
           onClick={() => setActivePdf(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-amc-title"
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl h-[85vh] flex flex-col overflow-hidden border border-slate-200"
+            className="pdf-modal-window"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
-              <div className="flex items-center gap-3">
-                <FileText size={20} className="text-indigo-600" />
+            <div className="pdf-modal-header">
+              <div className="modal-title-wrap">
+                <div className="modal-amc-icon">
+                  <FileText size={20} />
+                </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-base leading-tight">
-                    {activePdf.name}
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <div className="modal-title-row">
+                    <h3 id="modal-amc-title" className="modal-amc-title">
+                      {activePdf.name}
+                    </h3>
+                    <span className="modal-code-badge">{activePdf.code}</span>
+                  </div>
+                  <p className="modal-doc-meta">
                     Brokerage Structure — {activePdf.period}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="modal-action-buttons">
                 <a
                   href={`/AMCs/${encodeURIComponent(activePdf.fileName)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-100"
+                  className="modal-action-btn primary"
+                  title="Open PDF in a new tab"
                 >
-                  <ExternalLink size={13} />
+                  <ExternalLink size={14} />
                   <span>Open in Tab</span>
+                </a>
+                <a
+                  href={`/AMCs/${encodeURIComponent(activePdf.fileName)}`}
+                  download
+                  className="modal-action-btn secondary"
+                  title="Download PDF file"
+                >
+                  <Download size={14} />
+                  <span className="desktop-only">Download</span>
                 </a>
                 <button
                   type="button"
                   onClick={() => setActivePdf(null)}
-                  className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200 transition-colors"
+                  className="modal-close-btn"
                   aria-label="Close PDF Viewer"
+                  title="Close (Esc)"
                 >
                   <X size={20} />
                 </button>
               </div>
             </div>
 
+            {/* Mobile Browser Helper Banner */}
+            <div className="pdf-modal-mobile-banner">
+              <span>
+                📱 Viewing on mobile? For full resolution, tap{" "}
+                <a
+                  href={`/AMCs/${encodeURIComponent(activePdf.fileName)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open in Tab ↗
+                </a>
+              </span>
+            </div>
+
             {/* Modal Body: PDF Embed */}
-            <div className="flex-1 w-full h-full bg-slate-100 relative">
+            <div className="pdf-modal-body">
               <iframe
                 src={`/AMCs/${encodeURIComponent(activePdf.fileName)}#toolbar=1`}
                 title={`${activePdf.name} Commission Structure`}
-                className="w-full h-full border-0"
+                className="pdf-object-frame"
               />
             </div>
           </div>

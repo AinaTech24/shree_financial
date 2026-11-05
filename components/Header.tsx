@@ -33,7 +33,7 @@ export default function Header() {
 
   const act = (p: string) => (path === p ? "active" : "");
 
-  // Auto-close dropdown on route change
+  // Auto-close dropdown and mobile menu on route change
   useEffect(() => {
     setActiveDropdown(null);
     setSuppressed(false);
@@ -215,7 +215,20 @@ export default function Header() {
           <nav className="mobile-nav" onClick={(e) => (e.target as HTMLElement).closest("a") && close()}>
             <Link href="/">Home</Link>
             <Link href="/about">About Us</Link>
-            <Link href="/services">Services</Link>
+            <details className="mobile-services-details">
+              <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span>Services</span>
+                <ChevronDown size={16} />
+              </summary>
+              <div className="mobile-sub">
+                <Link href="/services">All Services Overview</Link>
+                {SERVICES.map((s) => (
+                  <Link key={s.slug} href={`/${s.slug}`}>
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            </details>
             <Link href="/calculator">Calculators</Link>
             <Link href="/blog">Blog</Link>
             <Link href="/contact">Contact Us</Link>
@@ -225,7 +238,8 @@ export default function Header() {
               rel="noopener noreferrer"
               className="mobile-login-btn"
             >
-              Portfolio Login
+              <UserCheck size={16} style={{ display: "inline-block", marginRight: "6px", verticalAlign: "middle" }} />
+              <span>Portfolio Login</span>
             </a>
           </nav>
         )}

@@ -70,7 +70,7 @@
    },
    {
     "h": "Types of PMS",
-    "html": "<ul> <li><b>Discretionary PMS</b> - The Portfolio Manager takes investment decisions on behalf of the investor as per the agreed strategy.</li> <li><b>Non-Discretionary PMS</b> - Investment decisions are executed only after the investor approves each transaction.</li> <li><b>Advisory PMS</b> - The Portfolio Manager provides recommendations, and execution is done by the investor.</li> </ul>"
+    "html": "<ul> <li><b>Discretionary PMS</b> - The Portfolio Manager takes investment decisions on behalf of the investor as per the agreed strategy.</li> <li><b>Non-Discretionary PMS</b> - Investment decisions are executed only after the investor approves each transaction.</li> <li><b> PMS</b> - The Portfolio Manager provides recommendations, and execution is done by the investor.</li> </ul>"
    },
    {
     "h": "Key Features of PMS",

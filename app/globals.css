@@ -1471,36 +1471,53 @@ a.pay-tile:hover { border-color: var(--indigo); box-shadow: var(--shadow); trans
   color: #0f172a;
 }
 
-/* PDF Modal Dialog */
+/* PDF Modal Dialog (True Floating Popup Overlay) */
 .pdf-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(15, 23, 42, 0.82) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+  box-sizing: border-box !important;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .pdf-modal-window {
-  width: 100%;
-  max-width: 1000px;
-  height: 90vh;
-  background: #ffffff;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
-  animation: modalPop 0.25s ease-out;
+  width: 100% !important;
+  max-width: 1040px !important;
+  height: 88vh !important;
+  max-height: 88vh !important;
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  animation: modalPopScale 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
 }
 
-@keyframes modalPop {
+@keyframes modalPopScale {
   from {
     opacity: 0;
-    transform: scale(0.96) translateY(10px);
+    transform: scale(0.96) translateY(12px);
   }
   to {
     opacity: 1;
@@ -1509,66 +1526,164 @@ a.pay-tile:hover { border-color: var(--indigo); box-shadow: var(--shadow); trans
 }
 
 .pdf-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  background: #0f172a;
-  color: #ffffff;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 16px 24px !important;
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #1e293b !important;
+  flex-shrink: 0;
+  gap: 16px;
 }
 
 .modal-title-wrap {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  min-width: 0;
 }
 
-.modal-amc-title {
-  font-size: 16.5px;
-  font-weight: 700;
-  color: #ffffff;
+.modal-amc-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(59, 63, 152, 0.35);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  color: #a5b4fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.modal-doc-meta {
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-.modal-action-buttons {
+.modal-title-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-amc-title {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.modal-code-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+}
+
+.modal-doc-meta {
+  font-size: 12.5px !important;
+  color: #94a3b8 !important;
+  margin-top: 2px;
+}
+
+.modal-action-buttons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0;
+}
+
+.modal-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.modal-action-btn.primary {
+  background: #3b3f98;
+  color: #ffffff !important;
+  border-color: #4f52b2;
+}
+
+.modal-action-btn.primary:hover {
+  background: #4f52b2;
+  transform: translateY(-1px);
+}
+
+.modal-action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0 !important;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-action-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff !important;
 }
 
 .modal-icon-btn, .modal-close-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
   background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  color: #cbd5e1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 0;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.15s;
   text-decoration: none !important;
 }
 
 .modal-icon-btn:hover, .modal-close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.pdf-modal-mobile-banner {
+  display: none;
+  background: #fffbeb;
+  border-bottom: 1px solid #fde68a;
+  color: #92400e;
+  font-size: 12.5px;
+  padding: 9px 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.pdf-modal-mobile-banner a {
+  color: #b45309;
+  font-weight: 700;
+  text-decoration: underline !important;
 }
 
 .pdf-modal-body {
-  flex-grow: 1;
-  background: #334155;
-  position: relative;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: #1e293b !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .pdf-object-frame {
-  width: 100%;
-  height: 100%;
-  border: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  display: block;
 }
 
 .pdf-fallback-notice {
@@ -9173,4 +9288,663 @@ a, a:hover, a:focus, a:visited {
   border: 1px solid #fef3c7;
   border-radius: 14px;
   padding: 16px 20px;
+}
+
+
+/* Extra Scheme-Wise Commission & Mobile Responsiveness Enhancements */
+.table-actions-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-show-pdf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #ffffff !important;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #0f172a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-show-pdf:hover {
+  background: #3b3f98;
+  border-color: #3b3f98;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 63, 152, 0.25);
+}
+
+.btn-view-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569 !important;
+  transition: all 0.15s ease;
+  text-decoration: none !important;
+}
+
+.btn-view-tab:hover {
+  background: #f1f5f9;
+  border-color: #0f172a;
+  color: #0f172a !important;
+  transform: translateY(-1px);
+}
+
+.mobile-table-scroll-hint {
+  display: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.amc-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.amc-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #eef2ff;
+  color: #3b3f98;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.amc-name-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.statutory-content-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.statutory-shield-icon {
+  color: #059669;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.statutory-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.statutory-text strong {
+  color: #0f172a;
+}
+
+.empty-search-td {
+  padding: 36px 20px !important;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Comprehensive Mobile Responsiveness Media Queries */
+@media (max-width: 768px) {
+  .pdf-modal-backdrop {
+    padding: 10px !important;
+  }
+
+  .pdf-modal-window {
+    width: 96vw !important;
+    height: 92vh !important;
+    max-height: 92vh !important;
+    border-radius: 14px !important;
+  }
+
+  .pdf-modal-header {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+
+  .modal-amc-title {
+    font-size: 15px !important;
+  }
+
+  .modal-doc-meta {
+    font-size: 11px !important;
+  }
+
+  .modal-action-btn.secondary .desktop-only {
+    display: none;
+  }
+
+  .modal-action-btn {
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .pdf-modal-mobile-banner {
+    display: block !important;
+  }
+
+  .mobile-table-scroll-hint {
+    display: block !important;
+  }
+
+  .clean-compliance-table {
+    min-width: 540px !important;
+  }
+
+  .clean-compliance-table th,
+  .clean-compliance-table td {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+
+  .disclosure-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .search-input-wrap {
+    max-width: 100%;
+  }
+
+  .filter-count {
+    text-align: left;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Mobile padding & touch targets */
+  .section {
+    padding: 48px 0;
+  }
+
+  .page-hero {
+    padding: 42px 0 48px;
+  }
+
+  .page-hero h1 {
+    font-size: 28px !important;
+  }
+
+  .page-hero p {
+    font-size: 15px !important;
+  }
+
+  .modern-calc-wrap {
+    padding: 0 4px;
+  }
+
+  .calc-header-block {
+    margin-bottom: 24px;
+  }
+
+  .calc-main-title {
+    font-size: 28px;
+  }
+
+  .calc-subtitle {
+    font-size: 14px;
+  }
+
+  .calc-inputs-card, .calc-dark-card, .calc-benchmark-card, .progression-card {
+    padding: 18px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .dark-card-number {
+    font-size: 32px !important;
+  }
+
+  .split-stat .stat-val {
+    font-size: 16px;
+  }
+
+  .fld-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .fld-input-box {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .quick-pill {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .regulatory-portals-capsules-block .portals-capsules-row {
+    gap: 6px 8px;
+  }
+
+  .portal-capsule-btn {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .regulatory-industry-badges-row {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .industry-badge-card {
+    padding: 8px 14px;
+    height: 48px;
+  }
+
+  .industry-badge-card img {
+    height: 28px;
+  }
+
+  .regulatory-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .regulatory-compliance-links-row {
+    gap: 4px 8px;
+    font-size: 11px;
+  }
+
+  .compliance-link-wrapper {
+    gap: 8px;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS SUITE (TABLES TO CARDS, FULL COMPATIBILITY)
+   ========================================================================== */
+
+/* Desktop Table View / Mobile Cards View Toggle */
+.table-desktop-view {
+  display: block;
+}
+.table-mobile-cards-view {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .table-desktop-view {
+    display: none !important;
+  }
+  .table-mobile-cards-view {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+}
+
+/* 1. Mobile Cards for Scheme-Wise Commission Disclosure */
+.amc-mobile-card-list {
+  width: 100%;
+}
+
+.amc-mobile-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.amc-mobile-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+}
+
+.amc-mobile-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.amc-mobile-sr {
+  font-size: 12px;
+  font-weight: 800;
+  color: #3b3f98;
+  background: #eef2ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.amc-mobile-info {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.amc-mobile-title {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.3;
+  margin: 0 0 4px 0;
+}
+
+.amc-mobile-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.amc-mobile-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #f1f5f9;
+}
+
+.amc-meta-value {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.amc-mobile-actions {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.btn-mobile-show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #ffffff !important;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none !important;
+  min-height: 44px;
+  transition: background 0.15s;
+}
+
+.btn-mobile-show:hover, .btn-mobile-show:active {
+  background: #3b3f98;
+}
+
+.btn-mobile-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #334155 !important;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: 1.5px solid #cbd5e1;
+  cursor: pointer;
+  text-decoration: none !important;
+  min-height: 44px;
+  transition: all 0.15s;
+}
+
+.btn-mobile-tab:hover, .btn-mobile-tab:active {
+  background: #f1f5f9;
+  border-color: #0f172a;
+  color: #0f172a !important;
+}
+
+.empty-search-card {
+  padding: 36px 20px;
+  text-align: center;
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 16px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* 2. Mobile Cards for Scheme Registration & Commission Disclosure */
+.scheme-trail-mobile-cards {
+  width: 100%;
+}
+
+.scheme-trail-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scheme-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.scheme-sr-pill {
+  font-size: 12px;
+  font-weight: 800;
+  color: #3b3f98;
+  background: #eef2ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.scheme-info-stack {
+  flex-grow: 1;
+}
+
+.scheme-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.3;
+  margin: 0 0 6px 0;
+}
+
+.scheme-asset-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #2b357e;
+  background: #eef2ff;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.scheme-rates-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.rate-box {
+  padding: 10px 12px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rate-box.year1 {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+}
+
+.rate-box.year1 .rate-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1d4ed8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rate-box.year1 .rate-val {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #1e40af;
+}
+
+.rate-box.year2 {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+}
+
+.rate-box.year2 .rate-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #047857;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rate-box.year2 .rate-val {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #065f46;
+}
+
+/* Distributor Credentials Card Responsive */
+.distributor-creds-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 14px;
+}
+
+.distributor-creds-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cred-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.cred-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cred-val {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cred-sub {
+  font-size: 12px;
+  color: #059669;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .distributor-creds-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .scheme-rates-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* Legal Documents Card Responsive */
+.legal-doc-card {
+  padding: 40px 48px;
+  border-radius: 20px;
+}
+
+@media (max-width: 640px) {
+  .legal-doc-card {
+    padding: 22px 16px !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* WhatsApp Popup Positioning on Small Phones */
+@media (max-width: 480px) {
+  .wa-pop {
+    position: fixed !important;
+    right: 14px !important;
+    left: 14px !important;
+    bottom: 84px !important;
+    width: auto !important;
+    max-width: calc(100vw - 28px) !important;
+  }
+}
+
+/* Ultra-small screen support (< 380px) */
+@media (max-width: 380px) {
+  .amc-mobile-actions {
+    grid-template-columns: 1fr;
+  }
+  .btn-mobile-show, .btn-mobile-tab {
+    width: 100%;
+  }
+  .stat b {
+    font-size: 32px;
+  }
+  .hero-headline {
+    font-size: 26px !important;
+  }
 }

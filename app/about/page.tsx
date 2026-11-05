@@ -25,7 +25,7 @@ export default function About() {
         <div className="wrap about-top">
           <div className="prose">
             <span className="eyebrow">Our Legacy &amp; Heritage</span>
-            <h2 style={{ fontSize: 38, margin: "12px 0 20px" }}>Guiding Investors Since 2007</h2>
+            <h2 style={{ fontSize: "clamp(26px, 4.5vw, 38px)", margin: "12px 0 20px" }}>Guiding Investors Since 2007</h2>
             <p>
               Shah Financial Services is a Partnership Firm established in 2007, registered under the Indian Partnership
               Act, 1932, with its registered head office at A-111/112, Siddh Sagar Complex, First Floor, Near Railway

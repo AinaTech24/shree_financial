@@ -53,15 +53,16 @@ export default function RegistrationDisclosurePage() {
             </p>
           </div>
 
-          <div className="table-responsive-wrapper">
+          {/* Desktop Table View (>= 768px) */}
+          <div className="table-responsive-wrapper table-desktop-view">
             <table className="clean-compliance-table">
               <thead>
                 <tr>
-                  <th style={{ width: "80px", textAlign: "center" }}>Sr. No</th>
+                  <th style={{ width: "70px", textAlign: "center" }}>Sr. No</th>
                   <th>Scheme Category</th>
-                  <th style={{ width: "160px" }}>Asset Class</th>
-                  <th style={{ width: "220px", textAlign: "center" }}>Trail 1st Year</th>
-                  <th style={{ width: "240px", textAlign: "center" }}>Trail 2nd Year Onwards</th>
+                  <th style={{ width: "150px" }}>Asset Class</th>
+                  <th style={{ width: "190px", textAlign: "center" }}>Trail 1st Year</th>
+                  <th style={{ width: "210px", textAlign: "center" }}>Trail 2nd Year Onwards</th>
                 </tr>
               </thead>
               <tbody>
@@ -71,7 +72,7 @@ export default function RegistrationDisclosurePage() {
                       {idx + 1}
                     </td>
                     <td>
-                      <strong className="text-slate-900">{row.schemeType}</strong>
+                      <strong style={{ color: "#0f172a" }}>{row.schemeType}</strong>
                     </td>
                     <td>
                       <span className="amc-code-badge">{row.category}</span>
@@ -88,31 +89,62 @@ export default function RegistrationDisclosurePage() {
             </table>
           </div>
 
+          {/* Mobile Card View (< 768px) - 100% responsive, no horizontal cutoff */}
+          <div className="scheme-trail-mobile-cards table-mobile-cards-view">
+            {SCHEME_TRAIL_RANGES.map((row, idx) => (
+              <div key={row.schemeType} className="scheme-trail-card">
+                <div className="scheme-card-top">
+                  <div className="scheme-sr-pill">#{idx + 1}</div>
+                  <div className="scheme-info-stack">
+                    <h4 className="scheme-name">{row.schemeType}</h4>
+                    <span className="scheme-asset-badge">{row.category}</span>
+                  </div>
+                </div>
+
+                <div className="scheme-rates-grid">
+                  <div className="rate-box year1">
+                    <span className="rate-label">Trail 1st Year</span>
+                    <strong className="rate-val">{row.trailYear1}</strong>
+                  </div>
+                  <div className="rate-box year2">
+                    <span className="rate-label">Trail 2nd Year Onwards</span>
+                    <strong className="rate-val">{row.trailYear2Onwards}</strong>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {/* Distributor Regulatory Credentials */}
-          <div className="distributor-credentials-card mt-10">
-            <h4 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
-              <ShieldCheck size={18} className="text-indigo-600" />
-              Distributor Registration Details
+          <div className="distributor-credentials-card" style={{ marginTop: "32px" }}>
+            <h4 className="distributor-creds-title">
+              <ShieldCheck size={20} className="text-indigo-600" />
+              <span>Distributor Registration Details</span>
             </h4>
-            <div className="grid md:grid-cols-3 gap-4 text-sm text-slate-700">
-              <div>
-                <strong>Entity Name:</strong> Shah Financial Services
+            <div className="distributor-creds-grid">
+              <div className="cred-item">
+                <span className="cred-label">Entity Name</span>
+                <strong className="cred-val">Shah Financial Services</strong>
               </div>
-              <div>
-                <strong>AMFI ARN:</strong> ARN-173086 (Valid till: 11/11/2029)
+              <div className="cred-item">
+                <span className="cred-label">AMFI ARN</span>
+                <strong className="cred-val">ARN-173086</strong>
+                <small className="cred-sub">Valid till: 11/11/2029</small>
               </div>
-              <div>
-                <strong>APMI PMS APRN:</strong> APRN-04142 (Valid till: 29/06/2029)
+              <div className="cred-item">
+                <span className="cred-label">APMI PMS APRN</span>
+                <strong className="cred-val">APRN-04142</strong>
+                <small className="cred-sub">Valid till: 29/06/2029</small>
               </div>
             </div>
           </div>
 
           {/* Regulatory Note */}
-          <div className="compliance-disclaimer-box mt-6">
-            <div className="flex items-start gap-3">
-              <Info size={18} className="text-amber-600 flex-shrink-0 mt-0.5" />
-              <div className="text-xs text-slate-600 leading-relaxed">
-                <strong>Important Disclosure:</strong> Commissions are paid on a trailing basis by the Asset Management Companies (AMCs) from the scheme's Total Expense Ratio (TER). Trail commissions are subject to clawback, T30/B30 regulatory changes, and periodic AMC rate revisions. Shah Financial Services does not charge any upfront or advisory fees from investors.
+          <div className="compliance-disclaimer-box" style={{ marginTop: "24px" }}>
+            <div className="statutory-content-row">
+              <Info size={20} className="statutory-info-icon" />
+              <div className="statutory-text">
+                <strong>Important Disclosure:</strong> Commissions are paid on a trailing basis by the Asset Management Companies (AMCs) from the scheme&apos;s Total Expense Ratio (TER). Trail commissions are subject to clawback, T30/B30 regulatory changes, and periodic AMC rate revisions. Shah Financial Services does not charge any upfront or  fees from investors.
               </div>
             </div>
           </div>
@@ -121,4 +153,3 @@ export default function RegistrationDisclosurePage() {
     </>
   );
 }
-
