@@ -3,24 +3,22 @@
 import React from "react";
 import Link from "next/link";
 import {
-  TrendingUp,
   ShieldCheck,
   CheckCircle2,
   Clock,
   ArrowRight,
   Phone,
-  Layers,
   Sparkles,
-  BarChart3,
-  Calendar,
-  Lock,
-  Percent,
-  HelpCircle,
-  Briefcase,
   Award,
+  Wallet,
+  TrendingUp,
+  Activity,
+  MessageCircle,
+  ExternalLink,
+  Layers,
+  FileText,
 } from "lucide-react";
 import { SERVICES, SITE, tel } from "@/content/site";
-import LeadForm from "./LeadForm";
 
 interface ServiceViewProps {
   slug: string;
@@ -218,145 +216,195 @@ export default function DedicatedServiceView({ slug, service }: ServiceViewProps
   const contentSections = service.sections.filter((s) => s.html);
 
   return (
-    <div className="dedicated-service-page">
-      {/* Hero Section */}
-      <section className="service-hero-section">
+    <div className="dedicated-service-page-v2">
+      {/* 1. Clean Service Hero */}
+      <section className="svc-hero-clean">
         <div className="wrap">
-          <div className="service-hero-clean-container">
-            <div className="service-category-badge">
-              <Sparkles size={14} className="sparkle-icon" />
-              <span>{meta.categoryBadge}</span>
+          <div className="svc-hero-inner">
+            <span className="svc-hero-badge">
+              <Sparkles size={13} className="text-indigo-600" />
+              {meta.categoryBadge}
+            </span>
+
+            <h1 className="svc-hero-title">{service.title}</h1>
+
+            <p className="svc-hero-desc">{meta.heroSubtitle}</p>
+
+            <div className="svc-hero-trust-row">
+              <span className="svc-trust-pill">
+                <ShieldCheck size={14} className="text-indigo-600" />
+                AMFI Registered (ARN-173086)
+              </span>
+              <span className="svc-trust-pill">
+                <CheckCircle2 size={14} className="text-emerald-600" />
+                100% Paperless Process
+              </span>
+              <span className="svc-trust-pill">
+                <Award size={14} className="text-amber-600" />
+                Serving Since 2007
+              </span>
+            </div>
+          </div>
+
+          {/* 2. Key Parameters Simple Card (Replaces the dark bar) */}
+          <div className="svc-key-facts-card">
+            <div className="fact-cell">
+              <div className="fact-icon-bubble bg-indigo">
+                <Clock size={18} />
+              </div>
+              <div className="fact-data">
+                <span className="fact-label">Recommended Horizon</span>
+                <strong className="fact-val">{meta.horizon}</strong>
+              </div>
             </div>
 
-            <h1 className="service-hero-title">{service.title}</h1>
+            <div className="fact-cell">
+              <div className="fact-icon-bubble bg-emerald">
+                <Wallet size={18} />
+              </div>
+              <div className="fact-data">
+                <span className="fact-label">Minimum Outgo</span>
+                <strong className="fact-val">{meta.minInvestment}</strong>
+              </div>
+            </div>
 
-            <p className="service-hero-lead">{meta.heroSubtitle}</p>
+            <div className="fact-cell">
+              <div className="fact-icon-bubble bg-blue">
+                <Activity size={18} />
+              </div>
+              <div className="fact-data">
+                <span className="fact-label">Liquidity Profile</span>
+                <strong className="fact-val">{meta.liquidity}</strong>
+              </div>
+            </div>
 
-            <div className="service-trust-tags">
-              <span className="trust-tag">
-                <ShieldCheck size={16} /> AMFI Registered (ARN-173086)
-              </span>
-              <span className="trust-tag">
-                <CheckCircle2 size={16} /> 100% Paperless Process
-              </span>
-              <span className="trust-tag">
-                <Award size={16} /> Serving Since 2007
-              </span>
+            <div className="fact-cell">
+              <div className="fact-icon-bubble bg-amber">
+                <TrendingUp size={18} />
+              </div>
+              <div className="fact-data">
+                <span className="fact-label">Risk Spectrum</span>
+                <strong className="fact-val">{meta.riskLevel}</strong>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Fast Facts Bar */}
-      <section className="service-fast-facts-bar">
+      {/* 3. Main Content & Sidebar (Simple Cards Layout) */}
+      <section className="section white svc-body-section">
         <div className="wrap">
-          <div className="fast-facts-grid">
-            <div className="fact-item">
-              <span className="fact-label">Recommended Horizon</span>
-              <strong className="fact-val">{meta.horizon}</strong>
-            </div>
-            <div className="fact-item">
-              <span className="fact-label">Minimum Outgo</span>
-              <strong className="fact-val">{meta.minInvestment}</strong>
-            </div>
-            <div className="fact-item">
-              <span className="fact-label">Liquidity Profile</span>
-              <strong className="fact-val">{meta.liquidity}</strong>
-            </div>
-            <div className="fact-item">
-              <span className="fact-label">Risk Spectrum</span>
-              <strong className="fact-val">{meta.riskLevel}</strong>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content Sections */}
-      <section className="section white">
-        <div className="wrap">
-          <div className="service-body-grid">
-            {/* Left Content Column */}
-            <div className="service-body-content">
-              {contentSections.map((sec, i) => (
-                <div key={sec.h} className="service-content-block">
-                  <div className="sec-title-with-pill">
-                    <span className="sec-num-badge">0{i + 1}</span>
-                    <h2 className="sec-block-title">{sec.h}</h2>
+          <div className="svc-content-layout">
+            {/* Left Column: Simple Cards for all Service Sections */}
+            <div className="svc-primary-cards">
+              {contentSections.map((sec, idx) => (
+                <div key={idx} className="svc-simple-card">
+                  <div className="svc-card-header">
+                    <span className="svc-card-step-badge">0{idx + 1}</span>
+                    <h2 className="svc-card-heading">{sec.h}</h2>
                   </div>
-                  <div className="sec-block-html prose" dangerouslySetInnerHTML={{ __html: sec.html }} />
+                  <div
+                    className="svc-card-body prose"
+                    dangerouslySetInnerHTML={{ __html: sec.html }}
+                  />
                 </div>
               ))}
 
-              {/* 4-Step Process Section */}
-              <div className="service-process-box">
-                <div className="sec-head">
-                  <span className="eyebrow">Our Methodology</span>
-                  <h2>How We Guide You to Success</h2>
-                  <p>A systematic, transparent process ensuring your capital works diligently for you.</p>
+              {/* 4-Step Methodology Card */}
+              <div className="svc-simple-card svc-methodology-card">
+                <div className="svc-card-header">
+                  <span className="svc-card-step-badge">
+                    <Layers size={14} />
+                  </span>
+                  <div>
+                    <h2 className="svc-card-heading">How We Guide You to Success</h2>
+                    <p className="svc-card-sub">
+                      A systematic 4-step framework engineered for long-term consistency and peace of mind.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="process-steps-grid">
+                <div className="svc-methodology-grid">
                   {meta.processSteps.map((step, idx) => (
-                    <div key={step.title} className="process-step-card">
-                      <div className="step-number">{idx + 1}</div>
-                      <h4 className="step-title">{step.title}</h4>
-                      <p className="step-desc">{step.desc}</p>
+                    <div key={step.title} className="method-step-box">
+                      <span className="method-num">{idx + 1}</span>
+                      <h4 className="method-title">{step.title}</h4>
+                      <p className="method-desc">{step.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Interactive Calculator Banner Link */}
-              <div className="service-calc-cta-banner">
-                <div className="calc-banner-text">
-                  <h3>Project Your Investment Growth</h3>
-                  <p>Use our interactive calculators with Rule of 72 benchmarks and yearly compounding tables.</p>
+              {/* Interactive Calculator Banner Card */}
+              <div className="svc-calc-cta-card">
+                <div className="cta-calc-content">
+                  <span className="cta-calc-tag">Financial Planning Tools</span>
+                  <h3 className="cta-calc-title">Project Your Wealth &amp; SIP Growth</h3>
+                  <p className="cta-calc-desc">
+                    Use our interactive financial calculators with Rule of 72 doubling benchmarks and year-by-year compounding tables.
+                  </p>
                 </div>
-                <Link href="/calculator" className="btn btn-gold">
-                  <span>Open Calculators Hub</span>
-                  <ArrowRight size={16} />
+                <Link href="/calculator" className="btn btn-primary cta-calc-btn">
+                  <span>Explore All Calculators</span>
+                  <ArrowRight size={15} />
                 </Link>
               </div>
             </div>
 
-            {/* Right Sticky Sidebar */}
-            <aside className="service-sidebar">
-              {/* Key Benefits Card */}
-              <div className="sidebar-card benefits-card">
-                <h4 className="sidebar-card-title">Key Highlights</h4>
-                <ul className="benefits-list">
+            {/* Right Column: Sticky Sidebar Simple Cards */}
+            <aside className="svc-sidebar-cards">
+              {/* Card 1: Key Highlights */}
+              <div className="svc-side-card">
+                <h3 className="side-card-title">Key Highlights</h3>
+                <ul className="side-highlights-list">
                   {meta.highlights.map((h) => (
-                    <li key={h}>
-                      <CheckCircle2 size={16} className="benefit-icon" />
+                    <li key={h} className="side-highlight-item">
+                      <CheckCircle2 size={16} className="text-emerald-600 flex-shrink-0" />
                       <span>{h}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Need Guidance Box */}
-              <div className="sidebar-card help-card">
-                <div className="help-icon-wrap">
-                  <Phone size={24} />
+              {/* Card 2: Speak with Our Advisor */}
+              <div className="svc-side-card help-side-card">
+                <div className="help-icon-bubble">
+                  <Phone size={22} />
                 </div>
-                <h4>Have Questions?</h4>
-                <p>Speak directly with our investment experts in Khambhat, Gujarat.</p>
-                <div className="help-phone-stack">
-                  {SITE.phones.map((p) => (
-                    <a key={p} href={tel(p)} className="help-phone-btn">
-                      {p}
+                <h3 className="side-card-title">Speak with Our Advisor</h3>
+                <p className="help-side-text">
+                  Have questions about this service? Speak directly with our AMFI registered distributors in Khambhat.
+                </p>
+
+                <div className="help-direct-phones">
+                  {SITE.phones.slice(0, 2).map((p) => (
+                    <a key={p} href={tel(p)} className="help-phone-row">
+                      <Phone size={14} className="text-indigo-600" />
+                      <span>{p}</span>
                     </a>
                   ))}
                 </div>
-                <Link href="/contact" className="btn btn-ghost sidebar-btn">
-                  Write to Us
+
+                <a
+                  href={`https://wa.me/${SITE.whatsapp}?text=Hello%20Shah%20Financial%20Services,%20I%20have%20an%20inquiry%20regarding%20${encodeURIComponent(service.title)}.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="side-whatsapp-action"
+                >
+                  <MessageCircle size={16} />
+                  <span>Chat on WhatsApp</span>
+                  <ExternalLink size={13} />
+                </a>
+
+                <Link href="/contact" className="side-consult-btn">
+                  Book Free Consultation →
                 </Link>
               </div>
 
-              {/* Regulatory Notice */}
-              <div className="sidebar-card notice-card">
-                <h5>Regulatory Disclosure</h5>
-                <p>
+              {/* Card 3: Regulatory Notice */}
+              <div className="svc-side-card compliance-side-card">
+                <span className="compliance-tag">Regulatory Disclosure</span>
+                <p className="compliance-text">
                   Mutual Fund investments are subject to market risks. Please read all scheme-related documents
                   carefully before investing. Past performance is not indicative of future returns. Shah Financial
                   Services is an AMFI registered Mutual Fund Distributor (ARN-173086).
@@ -367,24 +415,24 @@ export default function DedicatedServiceView({ slug, service }: ServiceViewProps
         </div>
       </section>
 
-      {/* Explore Other Services Grid (Replacing cramped sidebar) */}
-      <section className="section other-services-section">
+      {/* 4. Explore Other Services Grid (Simple Cards) */}
+      <section className="section tight other-services-section">
         <div className="wrap">
           <div className="sec-head center">
-            <span className="eyebrow">Explore More</span>
+            <span className="eyebrow">More Solutions</span>
             <h2>Explore Our Other Services</h2>
             <p>Comprehensive financial solutions designed to protect and compound your family wealth.</p>
           </div>
 
           <div className="other-services-grid">
             {otherServices.map((s) => (
-              <Link key={s.slug} href={`/${s.slug}`} className="other-service-card">
-                <div className="card-icon-area">
-                  <img src={s.icon} alt="" className="other-service-icon" />
+              <Link key={s.slug} href={`/${s.slug}`} className="other-service-simple-card">
+                <div className="other-svc-icon-box">
+                  <img src={s.icon} alt="" className="other-svc-icon" />
                 </div>
-                <h4 className="other-service-title">{s.label}</h4>
-                <span className="other-service-link">
-                  Learn More <ArrowRight size={14} />
+                <h4 className="other-svc-title">{s.label}</h4>
+                <span className="other-svc-action">
+                  Learn More <ArrowRight size={14} className="arrow" />
                 </span>
               </Link>
             ))}
@@ -394,4 +442,3 @@ export default function DedicatedServiceView({ slug, service }: ServiceViewProps
     </div>
   );
 }
-

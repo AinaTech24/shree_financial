@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/PageHero";
 import { SingleCalcView } from "@/components/CalcHub";
-import { INVEST_CALCS } from "@/content/site";
+import { ALL_CALCS } from "@/content/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return INVEST_CALCS.map((c) => ({ slug: c.slug }));
+  return ALL_CALCS.map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const calc = INVEST_CALCS.find((c) => c.slug === slug);
+  const calc = ALL_CALCS.find((c) => c.slug === slug);
   if (!calc) return { title: "Calculator Not Found" };
   return {
     title: `${calc.title} | Shah Financial Services`,
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CalcPage({ params }: Props) {
   const { slug } = await params;
-  const calc = INVEST_CALCS.find((c) => c.slug === slug);
+  const calc = ALL_CALCS.find((c) => c.slug === slug);
   if (!calc) notFound();
 
   return (

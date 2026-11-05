@@ -19,7 +19,7 @@ export default function CalculatorPage() {
       />
       <section className="section tight">
         <div className="wrap">
-          <CalcHub calcs={INVEST_CALCS} />
+          <CalcHub />
         </div>
       </section>
     </>

@@ -1,15 +1,33 @@
 import Link from "next/link";
-import { POLICY_LINKS, SERVICES, SITE, tel } from "@/content/site";
+import { SERVICES, SITE, tel } from "@/content/site";
 import { ShieldCheck, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 
 const REGULATORY_PORTALS = [
-  { name: "NSE", href: "https://www.nseindia.com" },
-  { name: "BSE", href: "https://www.bseindia.com" },
-  { name: "SEBI", href: "https://www.sebi.gov.in" },
-  { name: "RBI", href: "https://www.rbi.org.in" },
-  { name: "CDSL", href: "https://www.cdslindia.com" },
-  { name: "NCDEX", href: "https://www.ncdex.com" },
-  { name: "MCX", href: "https://www.mcxindia.com" },
+  { name: "NSE", href: "https://www.nseindia.com/" },
+  { name: "BSE", href: "https://www.bseindia.com/" },
+  { name: "SEBI", href: "https://www.sebi.gov.in/" },
+  { name: "RBI", href: "https://www.rbi.org.in/" },
+  { name: "CDSL", href: "https://www.cdslindia.com/" },
+  { name: "NCDEX", href: "https://www.ncdex.com/" },
+  { name: "MCX", href: "https://www.mcxindia.com/" },
+];
+
+const COMPLIANCE_NAV_LINKS = [
+  { label: "AMFI Risk Factors", href: "/risk-factors", external: false },
+  { label: "Terms & Conditions", href: "/terms-of-service", external: false },
+  { label: "Disclaimer", href: "/disclaimer", external: false },
+  { label: "Investor Charter", href: "/investor-charter", external: false },
+  { label: "Fund Selection & Suitability Policy", href: "/fund-selection-policy", external: false },
+  { label: "Client Onboarding & KYC Policy", href: "/client-onboarding", external: false },
+  { label: "Rights & Obligations Of Investors", href: "/rights-and-obligations", external: false },
+  { label: "Do's and Don'ts for Investors", href: "/dos-and-donts", external: false },
+  { label: "Privacy Policy", href: "/privacy-policy", external: false },
+  { label: "AMFI Code of Conduct", href: "/AMFI_Code-of-Conduct.pdf", external: true },
+  { label: "SEBI Circulars", href: "https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListing=yes&sid=1&ssid=7&smid=0", external: true },
+  { label: "KIM / SID / SAI", href: "https://www.sebi.gov.in/filings/mutual-funds.html", external: true },
+  { label: "Factsheet", href: "https://www.amfiindia.com/online-center/download-factsheets", external: true },
+  { label: "Scheme-Wise Commission Disclosure", href: "/scheme-wise-commission", external: false },
+  { label: "Registration Disclosure", href: "/registration-disclosure", external: false },
 ];
 
 export default function Footer() {
@@ -38,7 +56,8 @@ export default function Footer() {
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About Us</Link></li>
             <li><Link href="/calculator">Calculators Hub</Link></li>
-            <li><Link href="/scheme-wise-commission-disclosure">AMC Commission Disclosure</Link></li>
+            <li><Link href="/scheme-wise-commission">AMC Commission Disclosure</Link></li>
+            <li><Link href="/registration-disclosure">Registration Disclosure</Link></li>
             <li><Link href="/financial-fitness">Financial Fitness</Link></li>
             <li><Link href="/risk-profile">Risk Profile</Link></li>
             <li><Link href="/blog">Knowledge Hub / Blog</Link></li>
@@ -65,7 +84,7 @@ export default function Footer() {
               <div>
                 <small>Helpline</small>
                 <div className="phone-stack">
-                  {SITE.phones.map((p, i) => (
+                  {SITE.phones.map((p) => (
                     <a key={p} href={tel(p)} className="contact-link">
                       {p}
                     </a>
@@ -94,26 +113,29 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Regulatory & Compliance Deep-Navy Section (Matching Image 2) */}
+      {/* Regulatory & Compliance Deep-Navy Section (AMFI/SEBI Standard Compliance) */}
       <div className="regulatory-section-dark">
         <div className="wrap">
-          {/* Important Portals */}
-          <div className="regulatory-portals-block">
-            <h5 className="portals-title">IMPORTANT REGULATORY &amp; EXCHANGE PORTALS</h5>
-            <div className="portals-row">
-              {REGULATORY_PORTALS.map((portal, idx) => (
-                <span key={portal.name} className="portal-entry">
-                  {idx > 0 && <span className="portal-pipe">|</span>}
-                  <a href={portal.href} target="_blank" rel="noopener noreferrer" className="portal-link">
-                    {portal.name}
-                  </a>
-                </span>
+          {/* 1. Important Regulatory & Exchange Portals (Top Capsules Row) */}
+          <div className="regulatory-portals-capsules-block">
+            <h5 className="portals-title-centered">IMPORTANT REGULATORY &amp; EXCHANGE PORTALS</h5>
+            <div className="portals-capsules-row">
+              {REGULATORY_PORTALS.map((portal) => (
+                <a
+                  key={portal.name}
+                  href={portal.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="portal-capsule-btn"
+                >
+                  <span>{portal.name}</span>
+                </a>
               ))}
             </div>
           </div>
 
-          {/* Regulatory Risk Disclaimers */}
-          <div className="regulatory-paragraphs">
+          {/* 2. Statutory Risk & Market Disclaimers (Centered, 12px text) */}
+          <div className="regulatory-disclaimers-text">
             <p>
               Investments in securities markets are subject to market risks. Mutual Fund investments are subject to
               market risks. Please read all scheme-related documents carefully before investing. Past performance is
@@ -121,68 +143,78 @@ export default function Footer() {
             </p>
             <p>
               The value of investments may fluctuate due to various factors including market conditions, interest rate
-              movements, credit quality of underlying securities, and liquidity in the market. Different types of
-              financial products carry different levels of risk. Investors should evaluate their risk appetite and
-              investment objectives before making any investment decision.
+              movements, credit quality of underlying securities, and liquidity in the market.
+            </p>
+            <p>
+              Different types of financial products carry different levels of risk. Investors should evaluate their risk
+              appetite and investment objectives before making any investment decision.
             </p>
             <p>
               Please refer to the respective offering documents such as the Scheme Information Document (SID), Key
               Information Memorandum (KIM), Disclosure Documents, or other product-specific materials for detailed risk
               factors.
             </p>
+            <div className="regulatory-credentials-centered">
+              <p>
+                AMFI Registered Mutual Fund Distributor | ARN: <strong>ARN-173086</strong> | Date:{" "}
+                <strong>09/11/2020</strong> | Valid Till: <strong>11/11/2029</strong>
+              </p>
+              <p>
+                For Grievances contact: <strong>+91 8141112000 / +91 9825423773</strong> | Email:{" "}
+                <a href={`mailto:${SITE.email}`} className="footer-gold-link">
+                  {SITE.email}
+                </a>
+              </p>
+            </div>
           </div>
 
-          {/* AMFI Registered Mutual Fund Distributor Box */}
-          <div className="regulatory-reg-box">
-            <p className="reg-text-main">
-              AMFI Registered Mutual Fund Distributor | ARN: <strong>ARN-173086</strong> | Inception:{" "}
-              <strong>2007</strong> | Valid Till: <strong>11/11/2029</strong>
-            </p>
-            <p className="reg-text-sub">
-              For Grievances contact: <strong>+91 8141112000 / +91 9825423773</strong> | Grievance Officer:{" "}
-              <strong>Mr. Ronak Nalinkumar Shah</strong> | Email:{" "}
-              <a href="mailto:info@shahfs.com" className="gold-link">
-                info@shahfs.com
-              </a>
-            </p>
-            <p className="reg-text-sub">
-              APMI Registration (PMS): <strong>APRN-04142</strong> (Valid till: 29/06/2029) | AMFI SIF:{" "}
-              <strong>ARN-173086</strong> | GSTIN: <strong>{SITE.gstin}</strong>
-            </p>
-          </div>
-
-          {/* Amber Compliance Links */}
-          <div className="regulatory-policy-links">
-            {POLICY_LINKS.map((l, idx) => (
-              <span key={l.label} className="policy-link-item">
-                {idx > 0 && <span className="policy-pipe">|</span>}
-                {l.external ? (
-                  <a href={l.href} target="_blank" rel="noopener noreferrer" className="gold-policy-link">
-                    {l.label}
+          {/* 3. Regulatory & Compliance Navigation Links (Centered, single pipe-separated row) */}
+          <div className="regulatory-compliance-links-row">
+            {COMPLIANCE_NAV_LINKS.map((item, idx) => (
+              <span key={item.label} className="compliance-link-wrapper">
+                {idx > 0 && <span className="compliance-pipe">|</span>}
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="compliance-nav-link"
+                  >
+                    {item.label}
                   </a>
                 ) : (
-                  <Link href={l.href} className="gold-policy-link">
-                    {l.label}
+                  <Link href={item.href} className="compliance-nav-link">
+                    {item.label}
                   </Link>
                 )}
               </span>
             ))}
           </div>
 
-          {/* Badges Cards (AMFI + Mutual Funds Sahi Hai) */}
-          <div className="regulatory-badges-row">
-            <div className="reg-badge-card">
-              <img src="/img/misc/amfi.webp" alt="AMFI Registered Mutual Fund Distributor" />
+          {/* 4. Industry Badges (Centered) */}
+          <div className="regulatory-industry-badges-row">
+            <div className="industry-badge-card">
+              <img src="/images/amfi-logo.webp" alt="AMFI Registered Mutual Fund Distributor" />
             </div>
-            <div className="reg-badge-card">
-              <img src="/img/misc/mutualfund.webp" alt="Mutual Funds Sahi Hai" />
+            <div className="industry-badge-card">
+              <img src="/images/mf-sahi-hai-logo.webp" alt="Mutual Funds Sahi Hai" />
             </div>
           </div>
 
-          {/* Bottom Copyright & Credit Row */}
+          {/* 5. Bottom Copyright & Attribution Bar */}
           <div className="regulatory-bottom-bar">
-            <span>© 2026 SHAH FINANCIAL SERVICES. All rights reserved.</span>
-            <span>Designed by AinaTech Services LLP</span>
+            <span>© 2026 Shah Financial Services. All rights reserved.</span>
+            <span>
+              Designed by{" "}
+              <a
+                href="https://ainatech.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ainatech-link"
+              >
+                AinaTech Services LLP
+              </a>
+            </span>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { SERVICES, SITE, tel } from "@/content/site";
 import {
   Phone,
@@ -28,24 +28,37 @@ export default function Header() {
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [suppressed, setSuppressed] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const act = (p: string) => (path === p ? "active" : "");
+
+  // Auto-close dropdown on route change
+  useEffect(() => {
+    setActiveDropdown(null);
+    setSuppressed(false);
+    setOpen(false);
+  }, [path]);
+
   const close = () => {
     setOpen(false);
     setActiveDropdown(null);
+    setSuppressed(true);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
   };
 
   const handleMouseEnter = (name: string) => {
+    if (suppressed) return;
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setActiveDropdown(name);
   };
 
   const handleMouseLeave = () => {
+    setSuppressed(false);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 350);
+    }, 60);
   };
 
   return (
@@ -111,8 +124,6 @@ export default function Header() {
 
               <div
                 className={`dd dd-vertical-services ${activeDropdown === "services" ? "open" : ""}`}
-                onMouseEnter={() => handleMouseEnter("services")}
-                onMouseLeave={handleMouseLeave}
               >
                 {/* 1. All Services Top Link */}
                 <Link

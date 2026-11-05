@@ -155,20 +155,20 @@ export const REGISTRATIONS = [
 
 export const POLICY_LINKS: { label: string; href: string; external?: boolean }[] = [
   { label: "AMFI Risk Factors", href: "/risk-factors" },
-  { label: "Terms & Conditions", href: "/terms-conditions" },
+  { label: "Terms & Conditions", href: "/terms-of-service" },
   { label: "Disclaimer", href: "/disclaimer" },
   { label: "Investor Charter", href: "/investor-charter" },
   { label: "Fund Selection & Suitability Policy", href: "/fund-selection-policy" },
-  { label: "Client Onboarding & KYC Policy", href: "/client-onboarding-policy" },
-  { label: "Rights & Obligations Of Investors", href: "/rights-obligations" },
-  { label: "Do's and Don'ts for Investors", href: "/dos-donts" },
+  { label: "Client Onboarding & KYC Policy", href: "/client-onboarding" },
+  { label: "Rights & Obligations Of Investors", href: "/rights-and-obligations" },
+  { label: "Do's and Don'ts for Investors", href: "/dos-and-donts" },
   { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "AMFI Code of Conduct", href: "https://www.amfiindia.com/code-of-conduct", external: true },
-  { label: "SEBI Circulars", href: "https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListingAll=yes&search=Mutual+Funds", external: true },
+  { label: "AMFI Code of Conduct", href: "/AMFI_Code-of-Conduct.pdf", external: true },
+  { label: "SEBI Circulars", href: "https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListing=yes&sid=1&ssid=7&smid=0", external: true },
   { label: "KIM / SID / SAI", href: "https://www.sebi.gov.in/filings/mutual-funds.html", external: true },
-  { label: "Factsheet", href: "https://www.amfiindia.com/research-information/other-data", external: true },
-  { label: "Scheme-Wise Commission Disclosure", href: "/scheme-wise-commission-disclosure" },
-  { label: "Registration Disclosure", href: "/commission-disclosures" },
+  { label: "Factsheet", href: "https://www.amfiindia.com/online-center/download-factsheets", external: true },
+  { label: "Scheme-Wise Commission Disclosure", href: "/scheme-wise-commission" },
+  { label: "Registration Disclosure", href: "/registration-disclosure" },
 ];
 
 export type Calc = { slug: string; title: string; icon: string; domain: string; dir: string; cat: string; minH: string; maxH: string };
@@ -199,6 +199,8 @@ export const MF_CALCS: Calc[] = [
   C("fund-performance", "Fund Performance", "top-performance", "php-performance", "1200px", "480px"),
   C("nav-finder", "NAV Finder Calculator", "nav-finder", "php-performance", "970px", "680px"),
 ];
+
+export const ALL_CALCS: Calc[] = [...INVEST_CALCS, ...MF_CALCS];
 
 export const PAY_GROUPS = [
   {
