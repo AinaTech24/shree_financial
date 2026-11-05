@@ -37,7 +37,7 @@ export default function LoginForm() {
         }}
       >
         <div className="seg" role="radiogroup" aria-label="Login type">
-          {[["CLIENT", "Client"], ["EMPLOYEE", "Employee"], ["ADVISOR", "Admin"]].map(([v, l]) => (
+          {[["CLIENT", "Client"], ["EMPLOYEE", "Employee"], ["ADMIN", "Admin"]].map(([v, l]) => (
             <label key={v}>
               <input type="radio" name="loginType" value={v} checked={type === v} onChange={() => setType(v)} />
               <span>{l}</span>

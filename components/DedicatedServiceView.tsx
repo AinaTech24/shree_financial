@@ -42,7 +42,7 @@ const SERVICE_META: Record<
   }
 > = {
   "mutual-funds": {
-    categoryBadge: "Wealth Creation & Compounding",
+    categoryBadge: "Long-Term Capital Compounding",
     heroSubtitle:
       "A diversified, professionally managed pathway to participate in India's economic growth through transparent, SEBI-regulated schemes.",
     minInvestment: "₹500 / month SIP",
@@ -63,7 +63,7 @@ const SERVICE_META: Record<
     ],
   },
   "goal-based-mutual-fund-investing": {
-    categoryBadge: "Purpose-Driven Financial Planning",
+    categoryBadge: "Purpose-Driven Milestone Investing",
     heroSubtitle:
       "Transform random savings into targeted milestones — linking every rupee invested to a tangible life ambition.",
     minInvestment: "Customized to Goal",
@@ -126,7 +126,7 @@ const SERVICE_META: Record<
     ],
   },
   "child-marriage": {
-    categoryBadge: "Family Milestone Planning",
+    categoryBadge: "Family Milestone Goals",
     heroSubtitle:
       "Celebrate your child's momentous wedding celebration stress-free with a dedicated, ring-fenced compounding corpus.",
     minInvestment: "₹2,500 / month SIP",
@@ -179,7 +179,7 @@ const SERVICE_META: Record<
       "Government-backed security and AAA-rated corporate safety",
       "Regular half-yearly or annual coupon payments",
       "Exemptions on capital gains via Section 54EC bonds",
-      "Postal small savings schemes for guaranteed stability",
+      "Postal small savings schemes for capital preservation",
     ],
     processSteps: [
       { title: "Assess Cashflow Needs", desc: "Determine frequency of desired interest payouts." },
@@ -193,7 +193,7 @@ const SERVICE_META: Record<
 export default function DedicatedServiceView({ slug, service }: ServiceViewProps) {
   const meta = SERVICE_META[slug] || {
     categoryBadge: "Financial Service",
-    heroSubtitle: "Comprehensive wealth distribution and advisory support customized to your financial journey.",
+    heroSubtitle: "Comprehensive mutual fund distribution and disciplined assistance customized to your financial journey.",
     minInvestment: "Flexible",
     horizon: "Medium to Long Term",
     liquidity: "Product Dependent",
@@ -338,8 +338,8 @@ export default function DedicatedServiceView({ slug, service }: ServiceViewProps
               {/* Interactive Calculator Banner Card */}
               <div className="svc-calc-cta-card">
                 <div className="cta-calc-content">
-                  <span className="cta-calc-tag">Financial Planning Tools</span>
-                  <h3 className="cta-calc-title">Project Your Wealth &amp; SIP Growth</h3>
+                  <span className="cta-calc-tag">Financial Assessment Tools</span>
+                  <h3 className="cta-calc-title">Assess Your SIP &amp; Milestone Growth</h3>
                   <p className="cta-calc-desc">
                     Use our interactive financial calculators with Rule of 72 doubling benchmarks and year-by-year compounding tables.
                   </p>
@@ -366,14 +366,14 @@ export default function DedicatedServiceView({ slug, service }: ServiceViewProps
                 </ul>
               </div>
 
-              {/* Card 2: Speak with Our Advisor */}
+              {/* Card 2: Speak with Our Team */}
               <div className="svc-side-card help-side-card">
                 <div className="help-icon-bubble">
                   <Phone size={22} />
                 </div>
-                <h3 className="side-card-title">Speak with Our Advisor</h3>
+                <h3 className="side-card-title">Speak with Our Team</h3>
                 <p className="help-side-text">
-                  Have questions about this service? Speak directly with our AMFI registered distributors in Khambhat.
+                  Have questions about this service? Speak directly with our AMFI registered specialists in Khambhat.
                 </p>
 
                 <div className="help-direct-phones">

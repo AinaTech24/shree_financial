@@ -16,8 +16,8 @@ import {
 
 const SERVICE_TAGS: Record<string, string> = {
   "mutual-funds": "Systematic SIP & long-term compounding",
-  "goal-based-mutual-fund-investing": "Purpose-driven milestone wealth creation",
-  pms: "Bespoke HNI portfolio management",
+  "goal-based-mutual-fund-investing": "Purpose-driven milestone investing",
+  pms: "Bespoke HNI portfolio distribution",
   retirement: "Inflation-proof corpus & monthly SWP",
   "child-marriage": "Dedicated long-term wedding corpus",
   education: "Domestic & overseas higher studies",
@@ -97,13 +97,13 @@ export default function Header() {
 
           <ul className="nav">
             <li>
-              <Link href="/" className={act("/")}>
+              <Link href="/" className={act("/")} onClick={close}>
                 Home
               </Link>
             </li>
 
             <li>
-              <Link href="/about" className={act("/about")}>
+              <Link href="/about" className={act("/about")} onClick={close}>
                 About Us
               </Link>
             </li>
@@ -133,7 +133,7 @@ export default function Header() {
                 >
                   <div className="dd-item-text-stack">
                     <strong className="dd-item-title">All Services</strong>
-                    <span className="dd-item-sub">Explore complete financial solutions</span>
+                    <span className="dd-item-sub">Explore complete mutual fund solutions</span>
                   </div>
                   <ChevronRight size={14} className="dd-item-arrow" />
                 </Link>
@@ -149,7 +149,7 @@ export default function Header() {
                     <div className="dd-item-text-stack">
                       <strong className="dd-item-title">{s.label}</strong>
                       <span className="dd-item-sub">
-                        {SERVICE_TAGS[s.slug] || "Tailored financial planning"}
+                        {SERVICE_TAGS[s.slug] || "Goal-linked mutual fund distribution"}
                       </span>
                     </div>
                     <ChevronRight size={14} className="dd-item-arrow" />
@@ -163,6 +163,7 @@ export default function Header() {
               <Link
                 href="/calculator"
                 className={`nav-link ${path.startsWith("/calculator") ? "active" : ""}`}
+                onClick={close}
               >
                 Calculators
               </Link>
@@ -173,6 +174,7 @@ export default function Header() {
               <Link
                 href="/blog"
                 className={`nav-link ${path.startsWith("/blog") ? "active" : ""}`}
+                onClick={close}
               >
                 Blog
               </Link>
@@ -180,7 +182,7 @@ export default function Header() {
 
             {/* Contact Us */}
             <li>
-              <Link href="/contact" className={act("/contact")}>
+              <Link href="/contact" className={act("/contact")} onClick={close}>
                 Contact Us
               </Link>
             </li>

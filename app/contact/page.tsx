@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 const CONTACT_FAQS = [
   {
     q: "Do you charge any upfront consultation fee?",
-    a: "No. As an AMFI-registered Mutual Fund Distributor, we do not charge investors any upfront advisory or consultation fees. We receive regulated trail commissions directly from Asset Management Companies.",
+    a: "No. As an AMFI-registered Mutual Fund Distributor, we do not charge investors any upfront fees. We receive regulated trail commissions directly from Asset Management Companies.",
   },
   {
     q: "Can I invest paperlessly if I am not located in Khambhat?",
@@ -35,7 +35,7 @@ const CONTACT_FAQS = [
     a: "To complete your paperless KYC, you only require your PAN card, Aadhaar card, a canceled cheque or bank statement, and a digital signature photograph.",
   },
   {
-    q: "How soon will an advisor contact me after submitting an inquiry?",
+    q: "How soon will your team contact me after submitting an inquiry?",
     a: "Our team reviews all inquiries promptly and connects within 24 business hours (Monday to Saturday, 9:30 AM to 6:30 PM).",
   },
 ];
@@ -46,7 +46,7 @@ export default function ContactPage() {
       {/* 1. Page Hero */}
       <PageHero
         title="Get in Touch with Our Team"
-        sub="We are here to assist you with goal planning, mutual fund investments, and comprehensive portfolio reviews."
+        sub="We are here to assist you with milestone goal assessment, mutual fund investments, and comprehensive portfolio reviews."
         trail={[{ label: "Home", href: "/" }]}
       />
 
@@ -58,10 +58,10 @@ export default function ContactPage() {
             <div className="contact-info-card">
               <div className="contact-info-header">
                 <span className="contact-badge-pill">Direct Channels &amp; Office</span>
-                <h2 className="contact-info-title">Connect with Our Advisors</h2>
+                <h2 className="contact-info-title">Connect with Our Distribution Team</h2>
                 <p className="contact-info-subtitle">
                   Serving families across Gujarat and India since 2007 with AMFI-registered mutual fund distribution and
-                  personalized financial guidance.
+                  disciplined milestone investing support.
                 </p>
               </div>
 
@@ -195,7 +195,7 @@ export default function ContactPage() {
                 <span className="form-category-pill">Online Consultation</span>
                 <h3 className="form-title">Book a Free Consultation</h3>
                 <p className="form-subtitle">
-                  Fill out your details below and our AMFI registered advisor will reach out to discuss your goals.
+                  Fill out your details below and our AMFI registered distribution specialist will reach out to discuss your goals.
                 </p>
               </div>
 
@@ -251,7 +251,7 @@ export default function ContactPage() {
           <div className="sec-head center">
             <span className="eyebrow">Investor FAQs</span>
             <h2>Frequently Asked Questions</h2>
-            <p>Clear, straightforward answers about our mutual fund distribution and advisory onboarding.</p>
+            <p>Clear, straightforward answers about our mutual fund distribution and investor onboarding.</p>
           </div>
 
           <div className="contact-faqs-grid">

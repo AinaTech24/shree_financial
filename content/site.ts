@@ -92,11 +92,11 @@ export const PARTNERS: Partner[] = [
   },
   {
     name: "Mr. Rishi Ronak Shah",
-    role: "Partner & Wealth Advisor",
+    role: "Partner & MFD Specialist",
     image: "/img/team/rishi-shah.jpg",
     badge: "NISM Series V-A Certified",
     exp: "8+ YEARS EXPERIENCE",
-    bio: "Specializing in milestone-based financial planning, next-generation investor onboarding, and goal-targeted SIP portfolios for higher education and wealth creation.",
+    bio: "Specializing in milestone goal assessment, next-generation investor onboarding, and goal-targeted SIP portfolios for higher education and disciplined capital compounding.",
   },
   {
     name: "Mrs. Reena Ronak Shah",
@@ -255,7 +255,7 @@ export const HEALTH_QS = [
 export const RISK_QS: { q: string; a: string[] }[] = [
   { q: "Do you have enough savings set aside for emergencies without touching your investments?", a: ["No, I don't have any emergency savings", "I have some savings but not enough for 3 months expenses", "I have enough for about 3 months of expenses", "I have enough for 6 months of expenses", "I have more than 6 months of expenses saved"] },
   { q: "What is your main reason for investing?", a: ["To keep my money safe without any loss", "To earn steady income and protect my money", "To grow my money moderately with some risk", "To grow my money a lot and accept some ups and downs", "To take big risks and try to earn very high returns"] },
-  { q: "Which investment would you feel most comfortable keeping for the next 5 years?", a: ["Fixed deposits or PPF with guaranteed returns", "Government bonds or NSC with steady returns", "Shares of big, well-known Indian companies", "Mutual funds that invest in large and mid-size companies", "Stocks with high growth potential or international funds"] },
+  { q: "Which investment would you feel most comfortable keeping for the next 5 years?", a: ["Fixed deposits or PPF with fixed returns", "Government bonds or NSC with steady returns", "Shares of big, well-known Indian companies", "Mutual funds that invest in large and mid-size companies", "Stocks with high growth potential or international funds"] },
   { q: "How long do you plan to keep your money invested?", a: ["Less than 1 year", "1 to 3 years", "3 to 5 years", "5 to 10 years", "More than 10 years"] },
   { q: "What annual return would you be happy with, even if it goes up and down?", a: ["4% to 6% with very low risk", "6% to 8% with some safety", "8% to 12% with moderate risk", "12% to 15% with higher risk", "More than 15% with high risk"] },
   { q: "How much loss in your investments can you accept before feeling worried?", a: ["Less than 5% loss", "5% to 10% loss", "10% to 15% loss", "15% to 25% loss", "More than 25% loss"] },

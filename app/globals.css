@@ -78,7 +78,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .nav a, .nav button.nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; border-radius: 10px; color: var(--ink); font-weight: 600; font-size: 15px; background: none; border: 0; text-decoration: none; }
 .nav a:hover, .nav button.nav-link:hover, .nav a.active { background: var(--lavender); color: var(--indigo); }
 .dd { position: absolute; top: calc(100% + 4px); left: 0; min-width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-lg); padding: 8px; opacity: 0; visibility: hidden; transform: translateY(6px) scale(0.97); transition: opacity 0.16s ease, transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.16s ease; pointer-events: none; }
-.nav > li.is-open > .dd, .dd.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; }
+.nav > li.is-open > .dd, .dd.open { opacity: 1 !important; visibility: visible !important; transform: translateY(0) scale(1) !important; pointer-events: auto !important; }
+.dd:not(.open) { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
 .dd a:focus, .dd a:active, .dd-vertical-item:focus, .dd-vertical-item:active { outline: none !important; box-shadow: none !important; }
 .dd a { display: flex; width: 100%; font-weight: 500; }
 .nav a.login-btn { background: var(--indigo); color: #fff; padding: 10px 20px; border-radius: 999px; margin-left: 6px; }
@@ -3766,14 +3767,19 @@ a.pay-tile:hover { border-color: var(--indigo); box-shadow: var(--shadow); trans
 .nav > li {
   position: relative;
 }
-.nav > li:hover .dd,
-.nav > li:focus-within .dd,
-.nav-dropdown-item.is-open .dd,
+.nav-dropdown-item.is-open > .dd,
 .dd.open {
   opacity: 1 !important;
   visibility: visible !important;
   transform: translateY(0) !important;
   pointer-events: auto !important;
+}
+
+.dd:not(.open) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(6px) scale(0.97) !important;
 }
 
 /* Hover bridge: an invisible pseudo-element to prevent cursor dropping */

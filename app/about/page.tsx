@@ -110,11 +110,11 @@ export default function About() {
       <section className="section white" id="team">
         <div className="wrap">
           <div className="sec-head center">
-            <span className="eyebrow">Leadership &amp; Advisory Team</span>
+            <span className="eyebrow">Leadership &amp; Distribution Team</span>
             <h2>The Partners Behind Shah Financial Services</h2>
             <p>
-              Meet our team of experienced, certified professionals committed to ethical financial distribution and
-              personalized family wealth guidance.
+              Meet our team of experienced, certified professionals committed to ethical mutual fund distribution and
+              disciplined family milestone guidance.
             </p>
           </div>
 
@@ -150,17 +150,17 @@ export default function About() {
             <span className="eyebrow" style={{ justifyContent: "center" }}>
               Start Your Journey
             </span>
-            <h2>Ready to Plan Your Financial Future?</h2>
+            <h2>Ready to Begin Your Mutual Fund Journey?</h2>
             <p>
               Speak directly with our AMFI-registered team in Khambhat to map your portfolio to your life goals.
             </p>
             <div className="about-cta-actions">
               <Link href="/contact" className="btn btn-primary">
-                <span>Get Free Consultation</span>
+                <span>Connect With Our Team</span>
                 <ArrowRight size={16} />
               </Link>
               <Link href="/calculator" className="btn btn-ghost">
-                <span>Explore 14 Calculators</span>
+                <span>Explore 20 Calculators</span>
                 <ArrowRight size={16} />
               </Link>
             </div>

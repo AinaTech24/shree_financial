@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const SERVICE_TAGS: Record<string, string> = {
-  "mutual-funds": "Wealth Creation",
+  "mutual-funds": "Disciplined Compounding",
   "goal-based-mutual-fund-investing": "Life Milestones",
   pms: "HNI Direct Equity",
   retirement: "Monthly Income / SWP",
@@ -153,9 +153,9 @@ export default function Home() {
         <div className="wrap">
           <div className="sec-head center">
             <span className="eyebrow">Interactive Compounding</span>
-            <h2>Financial Planning Calculators</h2>
+            <h2>Financial Assessment Calculators</h2>
             <p>
-              Explore our core wealth calculators to project future corpus growth, systematic SIP compounding, and milestone targets.
+              Explore our core calculation tools to project future corpus growth, systematic SIP compounding, and milestone targets.
             </p>
           </div>
 
@@ -166,7 +166,7 @@ export default function Home() {
               </div>
               <h3 className="landing-calc-title">SIP Calculator</h3>
               <p className="landing-calc-desc">
-                Calculate prospective wealth creation and rupee cost averaging via disciplined monthly systematic investments.
+                Calculate prospective capital compounding and rupee cost averaging via disciplined monthly systematic investments.
               </p>
               <div className="landing-calc-preview">
                 <div className="calc-preview-stat">
@@ -190,7 +190,7 @@ export default function Home() {
               </div>
               <h3 className="landing-calc-title">Lumpsum Calculator</h3>
               <p className="landing-calc-desc">
-                Estimate prospective wealth growth for one-time investments with Rule of 72 doubling frequency benchmarks.
+                Estimate prospective capital compounding for one-time investments with Rule of 72 doubling frequency benchmarks.
               </p>
               <div className="landing-calc-preview">
                 <div className="calc-preview-stat">
@@ -210,16 +210,16 @@ export default function Home() {
 
             <div className="landing-calc-card highlight-hub-card">
               <div className="calc-card-badge-row">
-                <span className="calc-badge-hub">ALL 14 TOOLS</span>
+                <span className="calc-badge-hub">ALL 20 TOOLS</span>
               </div>
               <h3 className="landing-calc-title">Retirement &amp; Goal Calculators</h3>
               <p className="landing-calc-desc">
-                Full suite of planning tools including Retirement Corpus, Higher Education, Child Wedding, SWP, STP, and Loan EMIs.
+                Full suite of milestone tools including Retirement Corpus, Higher Education, Child Wedding, SWP, STP, and Loan EMIs.
               </p>
               <div className="landing-calc-preview">
                 <div className="calc-preview-stat">
                   <span>Milestone Calculators</span>
-                  <strong>14 Tools Available</strong>
+                  <strong>20 Tools Available</strong>
                 </div>
                 <div className="calc-preview-stat">
                   <span>Platform Access</span>
@@ -227,7 +227,7 @@ export default function Home() {
                 </div>
               </div>
               <Link href="/calculator" className="landing-calc-btn btn-hub-highlight">
-                <span>View All 14 Calculators</span>
+                <span>View All 20 Calculators</span>
                 <ArrowRight size={15} />
               </Link>
             </div>
@@ -283,7 +283,7 @@ export default function Home() {
           <div className="sec-head center">
             <span className="eyebrow">Client Feedback</span>
             <h2>What Our Valued Investors Say</h2>
-            <p>Stories of financial discipline and wealth creation from our family of investors.</p>
+            <p>Stories of financial discipline and long-term milestone achievements from our family of investors.</p>
           </div>
 
           <div className="testimonials-modern-grid">

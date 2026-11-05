@@ -16,7 +16,7 @@ import {
 export const metadata: Metadata = {
   title: "Our Services | Shah Financial Services",
   description:
-    "Explore our complete suite of wealth distribution services: Mutual Funds, Goal-Based Investing, PMS & AIF, Retirement Planning, Child Education & Marriage, and Bonds.",
+    "Explore our complete suite of mutual fund distribution solutions: Mutual Funds, Goal-Based Investing, PMS & AIF, Retirement Planning, Child Education & Marriage, and Bonds.",
 };
 
 interface ServiceMeta {
@@ -29,7 +29,7 @@ interface ServiceMeta {
 
 const SERVICE_DETAILS: Record<string, ServiceMeta> = {
   "mutual-funds": {
-    category: "Wealth Creation",
+    category: "Capital Compounding",
     description:
       "Access equity, hybrid, debt, and liquid funds managed by India's top asset management companies with disciplined SIP allocation.",
     pill1: "Paperless SIP & Lumpsum",
@@ -37,7 +37,7 @@ const SERVICE_DETAILS: Record<string, ServiceMeta> = {
     highlight: "Start from ₹500/mo",
   },
   "goal-based-mutual-fund-investing": {
-    category: "Milestone Planning",
+    category: "Milestone Goals",
     description:
       "Link every rupee of mutual fund allocation to specific milestones such as buying a home, higher studies, or family wealth.",
     pill1: "Custom Asset Allocation",
@@ -113,8 +113,8 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
-        title="Comprehensive Wealth Solutions"
-        sub="Institutional-grade mutual fund distribution and personalized goal-based investment planning powered by 17+ years of AMFI-certified expertise."
+        title="Mutual Fund Distribution Solutions"
+        sub="Institutional-grade mutual fund distribution and disciplined milestone-based investing powered by 17+ years of AMFI-certified expertise."
         trail={[{ label: "Home", href: "/" }]}
       />
 
@@ -133,8 +133,8 @@ export default function ServicesPage() {
           <div className="modern-services-grid">
             {SERVICES.map((s) => {
               const details = SERVICE_DETAILS[s.slug] || {
-                category: "Financial Planning",
-                description: "Personalized financial distribution tailored to your aspirations.",
+                category: "Mutual Fund Solutions",
+                description: "Mutual fund distribution solutions tailored to your long-term milestones.",
                 pill1: "100% Digital Execution",
                 pill2: "AMFI Regulated Support",
                 highlight: "Transparent & ethical",
@@ -187,12 +187,12 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Structured Advisory Process Section */}
+      {/* Structured Distribution Process Section */}
       <section className="section process-section">
         <div className="wrap">
           <div className="sec-head center">
             <span className="eyebrow">Our Methodology</span>
-            <h2>How We Guide Your Wealth Journey</h2>
+            <h2>How We Support Your Investment Journey</h2>
             <p>A systematic 4-step framework engineered for long-term consistency and investor peace of mind.</p>
           </div>
 
@@ -214,17 +214,17 @@ export default function ServicesPage() {
           <div className="services-bottom-cta">
             <div className="cta-left">
               <span className="eyebrow" style={{ color: "#ffffff" }}>
-                Unbiased Advisory Distribution
+                Ethical Mutual Fund Distribution
               </span>
               <h3>Need Help Choosing the Right Service?</h3>
               <p>
-                Schedule a 20-minute consultation with our senior advisors in Khambhat. We will review your existing
-                holdings and recommend a customized goal roadmap with zero obligation.
+                Schedule a 20-minute discussion with our senior distribution specialists in Khambhat. We will assist you with
+                mutual fund portfolio tracking and disciplined milestone allocation with zero obligation.
               </p>
             </div>
             <div className="cta-right">
               <Link href="/contact" className="btn btn-primary cta-btn-white">
-                <span>Book Consultation</span>
+                <span>Connect with Us</span>
                 <ArrowRight size={16} />
               </Link>
             </div>
