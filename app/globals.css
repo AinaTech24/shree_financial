@@ -9582,283 +9582,184 @@ a, a:hover, a:focus, a:visited {
 
 
 /* ==========================================================================
-   MOBILE RESPONSIVENESS SUITE (TABLES TO CARDS, FULL COMPATIBILITY)
+   REGULATORY COMPLIANCE TABLES & RESPONSIVE REFINEMENTS
    ========================================================================== */
 
-/* Desktop Table View / Mobile Cards View Toggle */
-.table-desktop-view {
-  display: block;
+/* Universal Table Wrapper */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
 }
-.table-mobile-cards-view {
+
+.clean-compliance-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.clean-compliance-table th {
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 14px 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.clean-compliance-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.clean-compliance-table tr:last-child td {
+  border-bottom: none;
+}
+
+.clean-compliance-table tr:hover td {
+  background: #f8fafc;
+}
+
+/* Registration Disclosure Table Specifics */
+.reg-disclosure-table {
+  min-width: 680px;
+}
+
+.reg-disclosure-table .col-sr,
+.reg-disclosure-table .cell-sr {
+  width: 64px;
+  text-align: center;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.reg-disclosure-table .col-scheme,
+.reg-disclosure-table .cell-scheme {
+  min-width: 180px;
+  font-weight: 600;
+}
+
+.reg-disclosure-table .cell-scheme strong {
+  color: #0f172a;
+}
+
+.reg-disclosure-table .col-asset,
+.reg-disclosure-table .cell-asset {
+  width: 130px;
+}
+
+.reg-disclosure-table .col-rate-y1,
+.reg-disclosure-table .cell-rate.y1 {
+  width: 160px;
+  text-align: center;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.reg-disclosure-table .col-rate-y2,
+.reg-disclosure-table .cell-rate.y2 {
+  width: 180px;
+  text-align: center;
+  font-weight: 700;
+  color: #059669;
+}
+
+/* Scheme-Wise Commission Disclosure Table Specifics */
+.amc-disclosure-table {
+  min-width: 580px;
+}
+
+.amc-disclosure-table .col-sr,
+.amc-disclosure-table .cell-sr {
+  width: 64px;
+  text-align: center;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.amc-disclosure-table .col-amc,
+.amc-disclosure-table .cell-amc {
+  min-width: 200px;
+}
+
+.amc-disclosure-table .col-cat,
+.amc-disclosure-table .cell-cat {
+  width: 130px;
+}
+
+.amc-disclosure-table .col-period,
+.amc-disclosure-table .cell-period {
+  width: 180px;
+  color: #475569;
+}
+
+.amc-disclosure-table .col-action,
+.amc-disclosure-table .cell-action {
+  width: 150px;
+  text-align: center;
+}
+
+/* Table scroll hint for mobile */
+.mobile-table-scroll-hint {
   display: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #475569;
+  text-align: center;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 @media (max-width: 768px) {
-  .table-desktop-view {
-    display: none !important;
+  .mobile-table-scroll-hint {
+    display: block;
   }
-  .table-mobile-cards-view {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 14px !important;
+
+  .clean-compliance-table th {
+    padding: 10px 12px;
+    font-size: 11.5px;
+  }
+
+  .clean-compliance-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .reg-disclosure-table {
+    min-width: 600px;
+  }
+
+  .amc-disclosure-table {
+    min-width: 540px;
   }
 }
 
-/* 1. Mobile Cards for Scheme-Wise Commission Disclosure */
-.amc-mobile-card-list {
-  width: 100%;
-}
-
-.amc-mobile-card {
-  background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-.amc-mobile-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-}
-
-.amc-mobile-card-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.amc-mobile-sr {
-  font-size: 12px;
-  font-weight: 800;
-  color: #3b3f98;
-  background: #eef2ff;
-  padding: 4px 8px;
-  border-radius: 6px;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.amc-mobile-info {
-  flex-grow: 1;
-  min-width: 0;
-}
-
-.amc-mobile-title {
-  font-size: 15.5px;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.3;
-  margin: 0 0 4px 0;
-}
-
-.amc-mobile-badge-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.amc-mobile-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  color: #64748b;
+/* Distributor Regulatory Credentials Card */
+.distributor-credentials-card {
   background: #f8fafc;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid #f1f5f9;
-}
-
-.amc-meta-value {
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.amc-mobile-actions {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 8px;
-  margin-top: 2px;
-}
-
-.btn-mobile-show {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: #0f172a;
-  color: #ffffff !important;
-  font-size: 13.5px;
-  font-weight: 600;
-  border: 0;
-  cursor: pointer;
-  text-decoration: none !important;
-  min-height: 44px;
-  transition: background 0.15s;
-}
-
-.btn-mobile-show:hover, .btn-mobile-show:active {
-  background: #3b3f98;
-}
-
-.btn-mobile-tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #334155 !important;
-  font-size: 13.5px;
-  font-weight: 600;
-  border: 1.5px solid #cbd5e1;
-  cursor: pointer;
-  text-decoration: none !important;
-  min-height: 44px;
-  transition: all 0.15s;
-}
-
-.btn-mobile-tab:hover, .btn-mobile-tab:active {
-  background: #f1f5f9;
-  border-color: #0f172a;
-  color: #0f172a !important;
-}
-
-.empty-search-card {
-  padding: 36px 20px;
-  text-align: center;
-  background: #f8fafc;
-  border: 1.5px dashed #cbd5e1;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
-  color: #64748b;
-  font-size: 14px;
+  padding: 24px;
 }
 
-/* 2. Mobile Cards for Scheme Registration & Commission Disclosure */
-.scheme-trail-mobile-cards {
-  width: 100%;
-}
-
-.scheme-trail-card {
-  background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.scheme-card-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.scheme-sr-pill {
-  font-size: 12px;
-  font-weight: 800;
-  color: #3b3f98;
-  background: #eef2ff;
-  padding: 4px 8px;
-  border-radius: 6px;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.scheme-info-stack {
-  flex-grow: 1;
-}
-
-.scheme-name {
-  font-size: 15.5px;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.3;
-  margin: 0 0 6px 0;
-}
-
-.scheme-asset-badge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  color: #2b357e;
-  background: #eef2ff;
-  padding: 2px 8px;
-  border-radius: 6px;
-}
-
-.scheme-rates-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.rate-box {
-  padding: 10px 12px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.rate-box.year1 {
-  background: #eff6ff;
-  border: 1px solid #dbeafe;
-}
-
-.rate-box.year1 .rate-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: #1d4ed8;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.rate-box.year1 .rate-val {
-  font-size: 14.5px;
-  font-weight: 800;
-  color: #1e40af;
-}
-
-.rate-box.year2 {
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-}
-
-.rate-box.year2 .rate-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: #047857;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.rate-box.year2 .rate-val {
-  font-size: 14.5px;
-  font-weight: 800;
-  color: #065f46;
-}
-
-/* Distributor Credentials Card Responsive */
 .distributor-creds-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
+  font-size: 16.5px;
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .distributor-creds-grid {
@@ -9870,23 +9771,23 @@ a, a:hover, a:focus, a:visited {
 .cred-item {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   background: #ffffff;
-  padding: 14px 16px;
+  padding: 14px 18px;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
 }
 
 .cred-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11.5px;
+  font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .cred-val {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
   color: #0f172a;
 }
@@ -9902,13 +9803,12 @@ a, a:hover, a:focus, a:visited {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  .scheme-rates-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
+  .distributor-credentials-card {
+    padding: 18px 16px;
   }
 }
 
-/* Legal Documents Card Responsive */
+/* Legal Documents Card */
 .legal-doc-card {
   padding: 40px 48px;
   border-radius: 20px;
@@ -9921,7 +9821,7 @@ a, a:hover, a:focus, a:visited {
   }
 }
 
-/* WhatsApp Popup Positioning on Small Phones */
+/* WhatsApp Mobile Centering */
 @media (max-width: 480px) {
   .wa-pop {
     position: fixed !important;
@@ -9930,21 +9830,5 @@ a, a:hover, a:focus, a:visited {
     bottom: 84px !important;
     width: auto !important;
     max-width: calc(100vw - 28px) !important;
-  }
-}
-
-/* Ultra-small screen support (< 380px) */
-@media (max-width: 380px) {
-  .amc-mobile-actions {
-    grid-template-columns: 1fr;
-  }
-  .btn-mobile-show, .btn-mobile-tab {
-    width: 100%;
-  }
-  .stat b {
-    font-size: 32px;
-  }
-  .hero-headline {
-    font-size: 26px !important;
   }
 }

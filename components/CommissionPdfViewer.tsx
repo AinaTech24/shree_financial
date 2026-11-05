@@ -98,16 +98,19 @@ export default function CommissionPdfViewer() {
         </div>
       </div>
 
-      {/* Desktop Table View (>= 768px) */}
-      <div className="table-responsive-wrapper table-desktop-view">
-        <table className="clean-compliance-table">
+      {/* Clean Responsive Compliance Table */}
+      <div className="table-responsive-wrapper">
+        <div className="mobile-table-scroll-hint">
+          <span>← Swipe horizontally to view full table details →</span>
+        </div>
+        <table className="clean-compliance-table amc-disclosure-table">
           <thead>
             <tr>
-              <th style={{ width: "70px", textAlign: "center" }}>Sr. No</th>
-              <th>AMC Name</th>
-              <th style={{ width: "160px" }}>Category</th>
-              <th style={{ width: "180px" }}>Disclosure Period</th>
-              <th style={{ width: "170px", textAlign: "center" }}>Action</th>
+              <th className="col-sr">Sr. No</th>
+              <th className="col-amc">AMC Name</th>
+              <th className="col-cat">Category</th>
+              <th className="col-period">Disclosure Period</th>
+              <th className="col-action">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -120,10 +123,10 @@ export default function CommissionPdfViewer() {
             ) : (
               filteredPdfs.map((amc, idx) => (
                 <tr key={amc.code}>
-                  <td style={{ textAlign: "center", fontWeight: 700, color: "#64748b" }}>
+                  <td className="cell-sr">
                     {idx + 1}
                   </td>
-                  <td>
+                  <td className="cell-amc">
                     <div className="amc-name-cell">
                       <div className="amc-icon-badge">
                         <FileText size={16} />
@@ -134,15 +137,15 @@ export default function CommissionPdfViewer() {
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <td className="cell-cat">
                     <span className={`amc-row-cat ${amc.category === "PMS / AIF" ? "pms" : ""}`}>
                       {amc.category}
                     </span>
                   </td>
-                  <td style={{ color: "#475569", fontSize: "14px" }}>
+                  <td className="cell-period">
                     {amc.period}
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td className="cell-action">
                     <div className="table-actions-group">
                       <button
                         type="button"
@@ -169,57 +172,6 @@ export default function CommissionPdfViewer() {
             )}
           </tbody>
         </table>
-      </div>
-
-      {/* Mobile Cards View (< 768px) - 100% visible, no horizontal cutoff */}
-      <div className="amc-mobile-card-list table-mobile-cards-view">
-        {filteredPdfs.length === 0 ? (
-          <div className="empty-search-card">
-            No AMCs found matching &quot;{search}&quot;. Please try a different search keyword.
-          </div>
-        ) : (
-          filteredPdfs.map((amc, idx) => (
-            <div key={amc.code} className="amc-mobile-card">
-              <div className="amc-mobile-card-top">
-                <span className="amc-mobile-sr">#{idx + 1}</span>
-                <div className="amc-mobile-info">
-                  <h4 className="amc-mobile-title">{amc.name}</h4>
-                  <div className="amc-mobile-badge-group">
-                    <span className="amc-code-badge">{amc.code}</span>
-                    <span className={`amc-row-cat ${amc.category === "PMS / AIF" ? "pms" : ""}`}>
-                      {amc.category}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="amc-mobile-meta">
-                <span className="amc-meta-label">Brokerage Schedule:</span>
-                <span className="amc-meta-value">{amc.period}</span>
-              </div>
-
-              <div className="amc-mobile-actions">
-                <button
-                  type="button"
-                  onClick={() => setActivePdf(amc)}
-                  className="btn-mobile-show"
-                >
-                  <Eye size={15} />
-                  <span>Show PDF</span>
-                </button>
-                <a
-                  href={`/AMCs/${encodeURIComponent(amc.fileName)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-mobile-tab"
-                >
-                  <ExternalLink size={14} />
-                  <span>Open in Tab</span>
-                </a>
-              </div>
-            </div>
-          ))
-        )}
       </div>
 
       {/* Floating Popup Modal Dialog */}

@@ -18,6 +18,7 @@ export interface CalculatorCardData {
   stat2Val: string;
 }
 
+// 14 Core Investment Calculators matching Image 3 specification
 export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   {
     slug: "sip-calculator",
@@ -65,7 +66,7 @@ export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   },
   {
     slug: "retirement-plan",
-    title: "Retirement Calculator",
+    title: "Retirement Corpus Calculator",
     badge: "FINANCIAL FREEDOM",
     badgeType: "purple",
     desc: "Determine your inflation-adjusted retirement corpus to enjoy lifelong financial independence and peace of mind.",
@@ -76,7 +77,7 @@ export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   },
   {
     slug: "delay-plan",
-    title: "Delay Cost Calculator",
+    title: "Investment Delay Calculator",
     badge: "OPPORTUNITY COST",
     badgeType: "rose",
     desc: "Discover the staggering compounding wealth lost by delaying your investment start date by just a few years.",
@@ -120,7 +121,7 @@ export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   },
   {
     slug: "marriage-plan",
-    title: "Marriage Calculator",
+    title: "Marriage Expense Calculator",
     badge: "FAMILY MILESTONE",
     badgeType: "pink",
     desc: "Plan a dedicated investment bucket for your child's wedding factoring in 10%+ ceremonial lifestyle inflation.",
@@ -131,7 +132,7 @@ export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   },
   {
     slug: "education-plan",
-    title: "Education Calculator",
+    title: "Education Cost Calculator",
     badge: "HIGHER STUDIES",
     badgeType: "indigo",
     desc: "Secure target funding for premier university degrees in India or abroad with currency-adjusted SIP targets.",
@@ -142,7 +143,7 @@ export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   },
   {
     slug: "house-plan",
-    title: "House Planning Calculator",
+    title: "Home Loan Calculator",
     badge: "REAL ESTATE",
     badgeType: "emerald",
     desc: "Plan your down payment savings and estimate affordable home loan repayments without financial stress.",
@@ -153,7 +154,7 @@ export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   },
   {
     slug: "car-plan",
-    title: "Car Planning Calculator",
+    title: "Car Purchase Calculator",
     badge: "VEHICLE PURCHASE",
     badgeType: "amber",
     desc: "Accumulate capital for your dream car through disciplined investing to purchase with minimum or zero debt.",
@@ -164,7 +165,7 @@ export const INVESTMENT_CALCULATOR_CARDS: CalculatorCardData[] = [
   },
   {
     slug: "vacation-plan",
-    title: "Vacation Calculator",
+    title: "Vacation Budget Calculator",
     badge: "TRAVEL & LEISURE",
     badgeType: "sky",
     desc: "Budget and save systematically for your annual domestic or international holiday dream trips.",
@@ -246,71 +247,267 @@ export const MF_TOOLS_CARDS: CalculatorCardData[] = [
 
 export const ALL_CALCULATOR_CARDS = [...INVESTMENT_CALCULATOR_CARDS, ...MF_TOOLS_CARDS];
 
-function renderCalcCard(item: CalculatorCardData) {
-  return (
-    <Link
-      key={item.slug}
-      href={`/calculator/${item.slug}`}
-      className="modern-calc-showcase-card"
-    >
-      <div className="calc-card-top-row">
-        <span className={`calc-card-badge badge-${item.badgeType}`}>{item.badge}</span>
-      </div>
+/**
+ * Clean Line-Art SVG Icons matching Image 3 specification
+ */
+function renderLineArtIcon(slug: string) {
+  const commonProps = {
+    width: "48",
+    height: "48",
+    viewBox: "0 0 48 48",
+    fill: "none",
+    stroke: "#111827",
+    strokeWidth: "1.6",
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
 
-      <h3 className="calc-card-title">{item.title}</h3>
+  switch (slug) {
+    case "sip-calculator":
+      // Clean Pie chart icon with detached slice
+      return (
+        <svg {...commonProps}>
+          <path d="M24 6a18 18 0 1 0 18 18h-18V6z" />
+          <path d="M28 4.5A18 18 0 0 1 43.5 20H28V4.5z" />
+        </svg>
+      );
 
-      <p className="calc-card-desc">{item.desc}</p>
+    case "lumpsum-calculator":
+      // Stack of coins with Rupee symbol
+      return (
+        <svg {...commonProps}>
+          <ellipse cx="24" cy="14" rx="14" ry="5.5" />
+          <path d="M10 14v8c0 3 6.3 5.5 14 5.5s14-2.5 14-5.5v-8" />
+          <path d="M10 22v8c0 3 6.3 5.5 14 5.5s14-2.5 14-5.5v-8" />
+          <path d="M10 30v8c0 3 6.3 5.5 14 5.5s14-2.5 14-5.5v-8" />
+          <path d="M21 12h6M21 14h6M23 10v7c0 2 2 2 3 2" />
+        </svg>
+      );
 
-      <div className="calc-card-stats-box">
-        <div className="stat-col">
-          <span className="stat-label">{item.stat1Label}</span>
-          <strong className="stat-val">{item.stat1Val}</strong>
-        </div>
-        <div className="stat-col">
-          <span className="stat-label">{item.stat2Label}</span>
-          <strong className="stat-val">{item.stat2Val}</strong>
-        </div>
-      </div>
+    case "stp-calculator":
+      // Two documents with exchange arrows
+      return (
+        <svg {...commonProps}>
+          <rect x="8" y="10" width="16" height="22" rx="2" />
+          <path d="M12 16h8M12 20h5" />
+          <rect x="24" y="16" width="16" height="22" rx="2" />
+          <path d="M28 22h8M28 26h5" />
+          <path d="M18 6h12l-3-3m3 3l-3 3" />
+          <path d="M30 42H18l3 3m-3-3l3-3" />
+        </svg>
+      );
 
-      <div className="calc-card-action-btn">
-        <span>Calculate Now</span>
-        <ArrowRight size={15} className="btn-arrow" />
-      </div>
-    </Link>
-  );
+    case "swp-calculator":
+      // ATM / Card dispensing currency
+      return (
+        <svg {...commonProps}>
+          <rect x="10" y="8" width="28" height="32" rx="3" />
+          <line x1="16" y1="14" x2="32" y2="14" />
+          <rect x="15" y="20" width="18" height="12" rx="1.5" />
+          <circle cx="24" cy="26" r="3" />
+          <path d="M24 32v6m-3-3l3 3 3-3" />
+        </svg>
+      );
+
+    case "retirement-plan":
+      // Rocking chair
+      return (
+        <svg {...commonProps}>
+          <path d="M16 10v18l16 2" />
+          <path d="M22 14v14" />
+          <path d="M28 16v12" />
+          <path d="M16 28l-5 12" />
+          <path d="M32 30l-4 10" />
+          <path d="M8 40c8 3 24 3 32 0" />
+        </svg>
+      );
+
+    case "delay-plan":
+      // Hourglass with downward arrow
+      return (
+        <svg {...commonProps}>
+          <path d="M14 8h20M14 40h20" />
+          <path d="M16 8v6c0 5 4 8 8 10-4 2-8 5-8 10v6" />
+          <path d="M32 8v6c0 5-4 8-8 10 4 2 8 5 8 10v6" />
+          <path d="M24 21v8m-3-3l3 3 3-3" />
+        </svg>
+      );
+
+    case "life-insurance-plan":
+      // Shield with protecting hands / heart
+      return (
+        <svg {...commonProps}>
+          <path d="M24 6l14 5v12c0 10-7 17-14 19-7-2-14-9-14-19V11l14-5z" />
+          <path d="M24 16c-2.5-3-7 0-4 5l4 4 4-4c3-5-1.5-8-4-5z" />
+        </svg>
+      );
+
+    case "emi-plan":
+      // Pocket calculator with Rupee
+      return (
+        <svg {...commonProps}>
+          <rect x="11" y="8" width="26" height="32" rx="3" />
+          <rect x="15" y="13" width="18" height="8" rx="1" />
+          <path d="M22 16h4M22 18h4" />
+          <circle cx="17" cy="26" r="1.5" />
+          <circle cx="24" cy="26" r="1.5" />
+          <circle cx="31" cy="26" r="1.5" />
+          <circle cx="17" cy="33" r="1.5" />
+          <circle cx="24" cy="33" r="1.5" />
+          <circle cx="31" cy="33" r="1.5" />
+        </svg>
+      );
+
+    case "calculator.php":
+      // TAX document with %
+      return (
+        <svg {...commonProps}>
+          <path d="M12 8h24v32l-4-2-4 2-4-2-4 2-4-2-4 2V8z" />
+          <text x="16" y="20" fontSize="7" fontWeight="bold" fill="#111827" stroke="none">TAX</text>
+          <path d="M21 28l6-6M22 23a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+        </svg>
+      );
+
+    case "marriage-plan":
+      // Two interlocking wedding rings
+      return (
+        <svg {...commonProps}>
+          <circle cx="19" cy="24" r="9" />
+          <circle cx="29" cy="24" r="9" />
+          <path d="M19 15l-1-3h2l-1 3" />
+        </svg>
+      );
+
+    case "education-plan":
+      // Open book with graduation cap & light
+      return (
+        <svg {...commonProps}>
+          <path d="M8 32c4-2 10-2 16 2 6-4 12-4 16-2v-18c-4-2-10-2-16 2-6-4-12-4-16-2v18z" />
+          <line x1="24" y1="16" x2="24" y2="34" />
+          <path d="M24 6l10 5-10 5-10-5 10-5z" />
+          <path d="M17 12.5v6c2 2 5 3 7 3s5-1 7-3v-6" />
+        </svg>
+      );
+
+    case "house-plan":
+      // Modern house with roof
+      return (
+        <svg {...commonProps}>
+          <path d="M8 20L24 7l16 13" />
+          <path d="M12 17v21h24V17" />
+          <rect x="20" y="26" width="8" height="12" />
+        </svg>
+      );
+
+    case "car-plan":
+      // Automobile car
+      return (
+        <svg {...commonProps}>
+          <path d="M10 28h28l-2-10a3 3 0 0 0-3-2H17a3 3 0 0 0-3 2l-2 10z" />
+          <circle cx="16" cy="34" r="4" />
+          <circle cx="32" cy="34" r="4" />
+          <path d="M6 28h4M20 34h8M36 28h6" />
+        </svg>
+      );
+
+    case "vacation-plan":
+      // Travel suitcases
+      return (
+        <svg {...commonProps}>
+          <rect x="8" y="16" width="22" height="24" rx="2" />
+          <line x1="14" y1="16" x2="14" y2="10" />
+          <line x1="24" y1="16" x2="24" y2="10" />
+          <line x1="14" y1="10" x2="24" y2="10" />
+          <rect x="26" y="22" width="14" height="18" rx="2" />
+          <line x1="30" y1="22" x2="30" y2="18" />
+          <line x1="36" y1="22" x2="36" y2="18" />
+          <line x1="30" y1="18" x2="36" y2="18" />
+        </svg>
+      );
+
+    default:
+      return (
+        <svg {...commonProps}>
+          <rect x="10" y="10" width="28" height="28" rx="4" />
+          <circle cx="24" cy="24" r="6" />
+        </svg>
+      );
+  }
 }
 
 /**
  * Main Calculator Hub Page (/calculator)
- * Shows all calculators in modern, clean cards matching Image 3.
- * Clicking navigates to that calculator's separate page!
+ * Shows the 14 minimalist cards with line-art icons matching Reference Image 3.
  */
 export function CalcHub() {
   return (
     <div className="calc-hub-cards-wrapper">
-      {/* Group 1: Investment Calculators (14 Cards) */}
+      {/* 1. Primary 14 Minimalist Calculator Cards (Image 3 Specification) */}
       <section className="calc-hub-group">
-        <div className="sec-head">
-          <span className="eyebrow">Wealth &amp; Milestones</span>
-          <h2>Investment Calculators</h2>
-          <p>Estimate compounding returns, forecast milestone corpuses, and model tax-efficient cashflows.</p>
+        <div className="sec-head center">
+          <span className="eyebrow">Financial Assessment Tools</span>
+          <h2>Select a Financial Calculator</h2>
+          <p>Explore our complete suite of milestone goal planning, systematic compounding, and debt amortization tools.</p>
         </div>
 
-        <div className="calc-cards-grid">
-          {INVESTMENT_CALCULATOR_CARDS.map((item) => renderCalcCard(item))}
+        {/* 14 Minimalist Cards Grid matching Image 3 */}
+        <div className="calc-minimal-14-grid">
+          {INVESTMENT_CALCULATOR_CARDS.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/calculator/${item.slug}`}
+              className="calc-minimal-card"
+            >
+              <div className="calc-minimal-icon-box">
+                {renderLineArtIcon(item.slug)}
+              </div>
+              <h3 className="calc-minimal-title">{item.title}</h3>
+            </Link>
+          ))}
         </div>
+
+        {/* Regulatory Disclaimer matching Image 3 footer text */}
+        <p className="calc-statutory-disclaimer-note">
+          For illustration purposes only. Actual returns may vary. Maximum assumed CAGR: 12% as per firm policy (AMFI cap: 13%). Mutual Fund investments are subject to market risks.
+        </p>
       </section>
 
-      {/* Group 2: MF Tools Calculators (6 Cards) */}
+      {/* 2. Group 2: Mutual Fund Analysis & Backtesting Tools (6 Cards) */}
       <section className="calc-hub-group mt-16">
-        <div className="sec-head">
-          <span className="eyebrow">Performance &amp; Analysis</span>
-          <h2>Mutual Fund Tools</h2>
-          <p>Historical backtesting, NAV tracking, and trailing return comparisons across 40+ AMCs.</p>
+        <div className="sec-head center">
+          <span className="eyebrow">Historical Backtesting</span>
+          <h2>Mutual Fund Performance &amp; NAV Tools</h2>
+          <p>Track daily NAVs, analyze rolling returns, and evaluate scheme performance across all 40+ AMCs in India.</p>
         </div>
 
         <div className="calc-cards-grid">
-          {MF_TOOLS_CARDS.map((item) => renderCalcCard(item))}
+          {MF_TOOLS_CARDS.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/calculator/${item.slug}`}
+              className="modern-calc-showcase-card"
+            >
+              <div className="calc-card-top-row">
+                <span className={`calc-card-badge badge-${item.badgeType}`}>{item.badge}</span>
+              </div>
+              <h3 className="calc-card-title">{item.title}</h3>
+              <p className="calc-card-desc">{item.desc}</p>
+              <div className="calc-card-stats-box">
+                <div className="stat-col">
+                  <span className="stat-label">{item.stat1Label}</span>
+                  <strong className="stat-val">{item.stat1Val}</strong>
+                </div>
+                <div className="stat-col">
+                  <span className="stat-label">{item.stat2Label}</span>
+                  <strong className="stat-val">{item.stat2Val}</strong>
+                </div>
+              </div>
+              <div className="calc-card-action-btn">
+                <span>Open Tool</span>
+                <ArrowRight size={15} className="btn-arrow" />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </div>
@@ -319,34 +516,45 @@ export function CalcHub() {
 
 /**
  * Dedicated Single Calculator Page (/calculator/[slug])
- * Renders ONLY the specific calculator requested, followed by other recommended calculators.
+ * Renders ONLY the specific calculator requested matching Image 1 layout!
  */
 export function SingleCalcView({ calc }: { calc: Calc }) {
-  const otherCalcs = ALL_CALCULATOR_CARDS.filter((c) => c.slug !== calc.slug).slice(0, 3);
+  const otherCalcs = INVESTMENT_CALCULATOR_CARDS.filter((c) => c.slug !== calc.slug).slice(0, 5);
 
   return (
     <div className="single-calc-dedicated-root">
-      {/* The Specific Calculator */}
+      {/* The Specific Calculator matching Image 1 */}
       <div className="single-calc-workbench">
         <ModernCalculator key={calc.slug} slug={calc.slug} />
       </div>
 
-      {/* Explore Other Calculators Section */}
-      <section className="section other-calcs-section">
+      {/* Explore Other Calculators Section (Image 3 Cards Mini Grid) */}
+      <section className="section white other-calcs-section">
         <div className="wrap">
           <div className="sec-head center">
-            <span className="eyebrow">More Financial Tools</span>
-            <h2>Explore Other Calculators</h2>
-            <p>Access our comprehensive suite of goal planning and portfolio performance calculators.</p>
+            <span className="eyebrow">More Calculators</span>
+            <h2>Explore Other Milestone Calculators</h2>
+            <p>Calculate retirement corpus, education targets, wedding expenses, and loan EMIs.</p>
           </div>
 
-          <div className="calc-cards-grid">
-            {otherCalcs.map((item) => renderCalcCard(item))}
+          <div className="calc-minimal-14-grid other-calcs-minimal-grid">
+            {otherCalcs.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/calculator/${item.slug}`}
+                className="calc-minimal-card"
+              >
+                <div className="calc-minimal-icon-box">
+                  {renderLineArtIcon(item.slug)}
+                </div>
+                <h3 className="calc-minimal-title">{item.title}</h3>
+              </Link>
+            ))}
           </div>
 
           <div className="text-center mt-10">
             <Link href="/calculator" className="btn btn-outline">
-              <span>View All 20 Calculators</span>
+              <span>View All 14 Milestone Calculators</span>
               <ArrowRight size={15} />
             </Link>
           </div>

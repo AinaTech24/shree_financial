@@ -1,9 +1,9 @@
-  "use client";
+"use client";
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { GOALS, SITE } from "@/content/site";
-import { ShieldCheck, ArrowRight, Sparkles, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, ArrowRight, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export default function GoalHero() {
   const [i, setI] = useState(0);
@@ -29,12 +29,39 @@ export default function GoalHero() {
       <div className="hero-mesh-background" />
 
       <div className="wrap hero-wrap">
-        {/* Active Goal Showcase Grid */}
+        {/* 1. Top Regulatory & Digital Trust Badges (Image 7 Specification) */}
+        <div className="hero-trust-bar">
+          <div className="hero-trust-badge">
+            <ShieldCheck size={15} className="text-emerald-600" />
+            <span>AMFI Registered Distributor (ARN-173086) • Founded in 2007</span>
+          </div>
+          <div className="hero-trust-badge">
+            <CheckCircle2 size={15} className="text-emerald-600" />
+            <span>100% Paperless Digital Investment</span>
+          </div>
+        </div>
+
+        {/* 2. Interactive Goal Tabs Selector (Image 7 Specification) */}
+        <div className="hero-goal-selector-bar" role="tablist" aria-label="Goal selection">
+          {GOALS.map((g, idx) => (
+            <button
+              key={g.title}
+              type="button"
+              role="tab"
+              aria-selected={idx === i}
+              className={`goal-tab-pill ${idx === i ? "active" : ""}`}
+              onClick={() => setI(idx)}
+            >
+              <span>{g.title}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* 3. Active Goal Showcase Content & Visual Grid */}
         <div className="hero-active-grid">
           <div className="hero-copy-col">
             <div className="hero-goal-eyebrow">
-              {/* <Sparkles size={14} className="sparkle-icon" /> */}
-              {/* <span>Targeted Goal </span> */}
+              <span>GOAL PLANNING</span>
             </div>
 
             <h1 className="hero-headline">
@@ -81,7 +108,7 @@ export default function GoalHero() {
           </div>
         </div>
 
-        {/* Carousel Navigation Dots and Arrows */}
+        {/* 4. Carousel Navigation Controls Bar */}
         <div className="hero-controls-bar">
           <button
             type="button"

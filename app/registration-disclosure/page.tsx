@@ -53,66 +53,43 @@ export default function RegistrationDisclosurePage() {
             </p>
           </div>
 
-          {/* Desktop Table View (>= 768px) */}
-          <div className="table-responsive-wrapper table-desktop-view">
-            <table className="clean-compliance-table">
+          {/* Clean Responsive Compliance Table */}
+          <div className="table-responsive-wrapper">
+            <div className="mobile-table-scroll-hint">
+              <span>← Swipe horizontally to view full rate columns →</span>
+            </div>
+            <table className="clean-compliance-table reg-disclosure-table">
               <thead>
                 <tr>
-                  <th style={{ width: "70px", textAlign: "center" }}>Sr. No</th>
-                  <th>Scheme Category</th>
-                  <th style={{ width: "150px" }}>Asset Class</th>
-                  <th style={{ width: "190px", textAlign: "center" }}>Trail 1st Year</th>
-                  <th style={{ width: "210px", textAlign: "center" }}>Trail 2nd Year Onwards</th>
+                  <th className="col-sr">Sr. No</th>
+                  <th className="col-scheme">Scheme Category</th>
+                  <th className="col-asset">Asset Class</th>
+                  <th className="col-rate-y1">Trail 1st Year</th>
+                  <th className="col-rate-y2">Trail 2nd Year Onwards</th>
                 </tr>
               </thead>
               <tbody>
                 {SCHEME_TRAIL_RANGES.map((row, idx) => (
                   <tr key={row.schemeType}>
-                    <td style={{ textAlign: "center", fontWeight: 700, color: "#64748b" }}>
+                    <td className="cell-sr">
                       {idx + 1}
                     </td>
-                    <td>
-                      <strong style={{ color: "#0f172a" }}>{row.schemeType}</strong>
+                    <td className="cell-scheme">
+                      <strong>{row.schemeType}</strong>
                     </td>
-                    <td>
+                    <td className="cell-asset">
                       <span className="amc-code-badge">{row.category}</span>
                     </td>
-                    <td style={{ textAlign: "center", fontWeight: 700, color: "#2563eb" }}>
+                    <td className="cell-rate y1">
                       {row.trailYear1}
                     </td>
-                    <td style={{ textAlign: "center", fontWeight: 700, color: "#059669" }}>
+                    <td className="cell-rate y2">
                       {row.trailYear2Onwards}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-
-          {/* Mobile Card View (< 768px) - 100% responsive, no horizontal cutoff */}
-          <div className="scheme-trail-mobile-cards table-mobile-cards-view">
-            {SCHEME_TRAIL_RANGES.map((row, idx) => (
-              <div key={row.schemeType} className="scheme-trail-card">
-                <div className="scheme-card-top">
-                  <div className="scheme-sr-pill">#{idx + 1}</div>
-                  <div className="scheme-info-stack">
-                    <h4 className="scheme-name">{row.schemeType}</h4>
-                    <span className="scheme-asset-badge">{row.category}</span>
-                  </div>
-                </div>
-
-                <div className="scheme-rates-grid">
-                  <div className="rate-box year1">
-                    <span className="rate-label">Trail 1st Year</span>
-                    <strong className="rate-val">{row.trailYear1}</strong>
-                  </div>
-                  <div className="rate-box year2">
-                    <span className="rate-label">Trail 2nd Year Onwards</span>
-                    <strong className="rate-val">{row.trailYear2Onwards}</strong>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
 
           {/* Distributor Regulatory Credentials */}
@@ -144,7 +121,7 @@ export default function RegistrationDisclosurePage() {
             <div className="statutory-content-row">
               <Info size={20} className="statutory-info-icon" />
               <div className="statutory-text">
-                <strong>Important Disclosure:</strong> Commissions are paid on a trailing basis by the Asset Management Companies (AMCs) from the scheme&apos;s Total Expense Ratio (TER). Trail commissions are subject to clawback, T30/B30 regulatory changes, and periodic AMC rate revisions. Shah Financial Services does not charge any upfront or  fees from investors.
+                <strong>Important Disclosure:</strong> Commissions are paid on a trailing basis by the Asset Management Companies (AMCs) from the scheme&apos;s Total Expense Ratio (TER). Trail commissions are subject to clawback, T30/B30 regulatory changes, and periodic AMC rate revisions. Shah Financial Services does not charge any upfront or advisory fees from investors.
               </div>
             </div>
           </div>
